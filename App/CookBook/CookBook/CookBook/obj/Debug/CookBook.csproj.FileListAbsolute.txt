@@ -1,0 +1,13 @@
+C:\Users\fblanco\CookBook\App\CookBook\CookBook\CookBook\bin\Debug\CookBook.dll
+C:\Users\fblanco\CookBook\App\CookBook\CookBook\CookBook\bin\Debug\CookBook.pdb
+C:\Users\fblanco\CookBook\App\CookBook\CookBook\CookBook\bin\Debug\Xamarin.Forms.Core.dll
+C:\Users\fblanco\CookBook\App\CookBook\CookBook\CookBook\bin\Debug\Xamarin.Forms.Platform.dll
+C:\Users\fblanco\CookBook\App\CookBook\CookBook\CookBook\bin\Debug\Xamarin.Forms.Xaml.dll
+C:\Users\fblanco\CookBook\App\CookBook\CookBook\CookBook\bin\Debug\Xamarin.Forms.Core.pdb
+C:\Users\fblanco\CookBook\App\CookBook\CookBook\CookBook\bin\Debug\Xamarin.Forms.Core.xml
+C:\Users\fblanco\CookBook\App\CookBook\CookBook\CookBook\bin\Debug\Xamarin.Forms.Platform.pdb
+C:\Users\fblanco\CookBook\App\CookBook\CookBook\CookBook\bin\Debug\Xamarin.Forms.Xaml.pdb
+C:\Users\fblanco\CookBook\App\CookBook\CookBook\CookBook\bin\Debug\Xamarin.Forms.Xaml.xml
+C:\Users\fblanco\CookBook\App\CookBook\CookBook\CookBook\obj\Debug\CookBook.csprojResolveAssemblyReference.cache
+C:\Users\fblanco\CookBook\App\CookBook\CookBook\CookBook\obj\Debug\CookBook.dll
+C:\Users\fblanco\CookBook\App\CookBook\CookBook\CookBook\obj\Debug\CookBook.pdb
