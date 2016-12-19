@@ -38,6 +38,7 @@
     <Compile Include="App.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="recipes\Recipe.cs" />
+    <Compile Include="recipes\RecipeManager.cs" />
     <Compile Include="recipes\Step.cs" />
     <Compile Include="resources\SqlResources.cs" />
     <Compile Include="utils\PathUtils.cs" />

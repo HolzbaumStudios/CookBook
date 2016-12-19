@@ -8,11 +8,18 @@ namespace CookBook.recipes
 {
     class Recipe
     {
-        public String name { get; set; }
-        public String description { get; set; }
-        public String creator { get; set; }
-        public String imagePath { get; set; }
+        private int id;
+        private String name;
+        private String description;
+        private String creator;
+        private String imagePath;
+        private List<Step> steps;
 
-        public List<Step> steps { get; set; }
+        public int Id { get; set; }
+        public String Name { get; set; }
+        public String Description { get; set; }
+        public String Creator { get; set; }
+        public String ImagePath { get; set; }
+        public List<Step> Steps { get; set; }
     }
 }   
