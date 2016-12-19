@@ -1,8 +1,11 @@
-﻿using System;
+﻿using CookBook.utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.SqlClient;
+
 
 namespace CookBook.recipes
 {
@@ -14,7 +17,10 @@ namespace CookBook.recipes
         /// <param name="recipe">The recipe to store, containing all necessary values</param>
         private void CreateRecipeEntry(Recipe recipe)
         {
+            using (SqlConnection connection = new SqlConnection(DBUtils.GetConnectionString()))
+            {
 
+            }
         }
 
         /// <summary>
