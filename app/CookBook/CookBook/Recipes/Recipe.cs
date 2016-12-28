@@ -23,8 +23,13 @@ namespace CookBook.recipes
         public string ImagePath { get; set; }
         public List<Step> Steps { get; set; }
 
+        /// <summary>
+        /// Constructor for en empty recipe
+        /// </summary>
         public Recipe()
         {
+            id = 0;
+            steps = new List<Step>();
             tags = new List<String>();
         }
 
