@@ -13,6 +13,7 @@ namespace CookBook.recipes
         private string description;
         private string creator;
         private string imagePath;
+        private List<String> tags;
         private List<Step> steps;
 
         public int Id { get; set; }
@@ -21,5 +22,20 @@ namespace CookBook.recipes
         public string Creator { get; set; }
         public string ImagePath { get; set; }
         public List<Step> Steps { get; set; }
+
+        public Recipe()
+        {
+            tags = new List<String>();
+        }
+
+        public void AddTag(String tag)
+        {
+            tags.Add(tag);
+        }
+
+        public void RemoveTag(String tag)
+        {
+            tags.Remove(tag);
+        }
     }
 }   
