@@ -21,7 +21,8 @@ namespace CookBook.recipes
         public string Description { get; set; }
         public string Creator { get; set; }
         public string ImagePath { get; set; }
-        public List<Step> Steps { get; set; }
+        public List<Step> Steps { get; private set; }
+        public List<String> Tags { get; private set; }
 
         /// <summary>
         /// Constructor for en empty recipe
@@ -33,14 +34,24 @@ namespace CookBook.recipes
             tags = new List<String>();
         }
 
+        public void AddStep(Step step)
+        {
+            Steps.Add(step);
+        }
+
+        public void RemoveStep(Step step)
+        {
+            Steps.Remove(step);
+        }
+
         public void AddTag(String tag)
         {
-            tags.Add(tag);
+            Tags.Add(tag);
         }
 
         public void RemoveTag(String tag)
         {
-            tags.Remove(tag);
+            Tags.Remove(tag);
         }
     }
 }   
