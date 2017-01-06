@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using CookBook.resources;
 using System.Data;
+using System.Diagnostics;
+using MySql.Data.MySqlClient;
 
 namespace CookBook.recipes
 {
@@ -81,31 +83,43 @@ namespace CookBook.recipes
         private int CreateRecipeEntry(Recipe recipe)
         {
             int returnId = 0;
-            using (SqlConnection connection = new SqlConnection(DBUtils.GetConnectionString()))
+            using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
             {
-                connection.Open();
-                SqlCommand command = new SqlCommand(null, connection);
-                
-                // Create and prepare an SQL statement.
-                command.CommandText = SqlResources.RECIPES_INSERT_RETURN;
-                SqlParameter nameParam = new SqlParameter("@name", SqlDbType.VarChar, MAX_CHAR_NAMES);
-                SqlParameter descParam = new SqlParameter("@desc", SqlDbType.VarChar, MAX_CHAR_RECIPE_DESC);
-                SqlParameter creatorParam = new SqlParameter("@creator", SqlDbType.VarChar, MAX_CHAR_NAMES);
-                SqlParameter imageParam = new SqlParameter("imageId", SqlDbType.Int);
-                command.Parameters.Add(nameParam);
-                command.Parameters.Add(descParam);
-                command.Parameters.Add(creatorParam);
-                command.Parameters.Add(imageParam);
-                
-                // Call Prepare after setting the Commandtext and Parameters.
-                command.Prepare();
+                try
+                {
+                    connection.Open();
+                    MySqlCommand command = new MySqlCommand(null, connection);
 
-                // Change parameter values and call ExecuteNonQuery.
-                command.Parameters[0].Value = recipe.Name;
-                command.Parameters[1].Value = recipe.Description;
-                command.Parameters[2].Value = recipe.Creator;
-                command.Parameters[3].Value = 1; //TODO: Change value
-                returnId = Convert.ToInt32(command.ExecuteScalar());
+                    // Create and prepare an SQL statement.
+                    command.CommandText = SqlResources.RECIPES_INSERT_RETURN;
+                    var nameParam = new MySqlParameter("@name", MySqlDbType.VarChar, MAX_CHAR_NAMES);
+                    var descParam = new MySqlParameter("@desc", MySqlDbType.VarChar, MAX_CHAR_RECIPE_DESC);
+                    var creatorParam = new MySqlParameter("@creator", MySqlDbType.VarChar, MAX_CHAR_NAMES);
+                    var imageParam = new MySqlParameter("imageId", MySqlDbType.Int32);
+                    command.Parameters.Add(nameParam);
+                    command.Parameters.Add(descParam);
+                    command.Parameters.Add(creatorParam);
+                    command.Parameters.Add(imageParam);
+
+                    // Call Prepare after setting the Commandtext and Parameters.
+                    command.Prepare();
+
+                    // Change parameter values and call ExecuteNonQuery.
+                    command.Parameters[0].Value = recipe.Name;
+                    command.Parameters[1].Value = recipe.Description;
+                    command.Parameters[2].Value = recipe.Creator;
+                    command.Parameters[3].Value = 1; //TODO: Change value
+                    returnId = Convert.ToInt32(command.ExecuteScalar());
+                }
+                catch (MySqlException ex)
+                {
+                    //TODO: Log error
+                    Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                }
+                catch (Exception ex)
+                {
+                    Debug.Print("This is an exception: " + ex);
+                }
             }
 
             return returnId;

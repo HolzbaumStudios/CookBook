@@ -29,9 +29,9 @@ namespace CookBook.recipes
         /// </summary>
         public Recipe()
         {
-            id = 0;
-            steps = new List<Step>();
-            tags = new List<String>();
+            Id = 0;
+            Steps = new List<Step>();
+            Tags = new List<String>();
         }
 
         public void AddStep(Step step)

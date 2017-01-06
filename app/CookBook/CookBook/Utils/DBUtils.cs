@@ -14,10 +14,11 @@ namespace CookBook.utils
             // To avoid storing the connection string in your code, 
             // you can retrieve it from a configuration file, using the 
             // System.Configuration.ConfigurationSettings.AppSettings property 
-            return "Data Source=(blancos.ch);" +
-                "Initial Catalog=CookBook;" +
-                "User id=nicoleu1_DBCookB; " +
-                "Password=WokuDasEi;"; 
+            return "server=blancos.ch;" +
+                "database=nicoleu1_DBCookBook;" +
+                "user id=nicoleu1_DBCookB; " +
+                "pwd=WokuDasEi;" +
+                "Connect Timeout=30;"; 
         }
     }
 }
