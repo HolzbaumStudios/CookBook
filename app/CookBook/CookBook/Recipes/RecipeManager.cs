@@ -86,9 +86,8 @@ namespace CookBook.recipes
                 connection.Open();
                 SqlCommand command = new SqlCommand(null, connection);
                 
-                               // Create and prepare an SQL statement.
+                // Create and prepare an SQL statement.
                 command.CommandText = SqlResources.RECIPES_INSERT_RETURN;
-                                //@name, @desc, @creator, @imageId
                 SqlParameter nameParam = new SqlParameter("@name", SqlDbType.VarChar, MAX_CHAR_NAMES);
                 SqlParameter descParam = new SqlParameter("@desc", SqlDbType.VarChar, MAX_CHAR_RECIPE_DESC);
                 SqlParameter creatorParam = new SqlParameter("@creator", SqlDbType.VarChar, MAX_CHAR_NAMES);
@@ -119,7 +118,7 @@ namespace CookBook.recipes
         private int CreateStepEntry(Step step)
         {
             int stepId = 0;
-
+            //@steps_description, @steps_timer, @fk_image
             return stepId;
         }
 
@@ -130,7 +129,7 @@ namespace CookBook.recipes
         /// <param name="stepId">The step identifier.</param>
         private void CreateRecipeStepsEntry(int recipeId, int stepId)
         {
-
+            //@fk_recipes, @fk_steps, @step_order
         }
 
         /// <summary>
@@ -143,6 +142,42 @@ namespace CookBook.recipes
 
             return tagId;
         }
+
+        /// <summary>
+        /// Creates the image entry.
+        /// </summary>
+        /// <param name="imagePath">The image path.</param>
+        /// <returns></returns>
+        private int CreateImageEntry(String imagePath)
+        {
+            int imageId = 0;
+            //@storage_Path
+            return imageId;
+        }
+
+        /// <summary>
+        /// Creates the ingredients entry.
+        /// </summary>
+        /// <param name="ingredient">The ingredient.</param>
+        /// <returns></returns>
+        private int CreateIngredientsEntry(String ingredient)
+        {
+            int ingredientId = 0;
+            //@ingredients_name, @fk_image
+            return ingredientId;
+        }
+
+        /// <summary>
+        /// Creates the steps ingredients entry.
+        /// </summary>
+        /// <param name="step_id">The step identifier.</param>
+        /// <param name="ingredients_id">The ingredients identifier.</param>
+        /// <param name="unit_id">The unit identifier.</param>
+        private void CreateStepsIngredientsEntry(int stepId, int ingredientsId, int unitId, int quantity)
+        {
+            //@fk_steps, @fk_ingredeints, @fk_quantityunits, @fk
+        }
+        
 
         /// <summary>
         /// Updates an existing recipe entry in the database.
@@ -159,7 +194,7 @@ namespace CookBook.recipes
         /// <param name="step">The updated step.</param>
         private void UpdateStepEntry(Step step)
         {
-        
+            //@id_steps, @steps_description, @steps_timer, @fk_image
         }
 
         /// <summary>
@@ -169,7 +204,21 @@ namespace CookBook.recipes
         /// <param name="stepId">The step identifier.</param>
         private void UpdateRecipeStepsEntry(int recipeId, int stepId)
         {
-
+            //@id_recipes_steps, @fk_recipes, @fk_steps, @step_order
         }
+
+        /// <summary>
+        /// Updates the steps ingredients entry.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="stepId">The step identifier.</param>
+        /// <param name="ingredientID">The ingredient identifier.</param>
+        /// <param name="unitId">The unit identifier.</param>
+        /// <param name="quantity">The quantity.</param>
+        private void UpdateStepsIngredientsEntry(int id, int stepId, int ingredientID, int unitId, int quantity)
+        {
+            //@id_steps_ingredients, @fk_steps, @fk_ingredients, @fk_quantityunits, @quantity)
+        }
+        
     }
 }
