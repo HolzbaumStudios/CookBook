@@ -7,26 +7,30 @@
         android:text="PedroTest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button1" />
+        android:id="@+id/btnPedro" />
     <TextView
         android:text="Enter a Phoneword:"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textView1" />
-    <EditText
+    <TextView
+        android:text="Hier steht dein Text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/PhoneNumberText"
-        android:text="1-855-XAMARIN" />
+        android:id="@+id/txtPedro"
+        android:height="100dp"
+        android:layout_margin="20dp" />
     <Button
-        android:text="Translate"
+        android:text="Click Event"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/TranslateButton" />
+        android:id="@+id/clickEvent" />
     <Button
         android:text="Call"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/CallButton" />
+        android:id="@+id/CallButton"
+        android:clickable="false"
+        android:enabled="false" />
 </LinearLayout>
