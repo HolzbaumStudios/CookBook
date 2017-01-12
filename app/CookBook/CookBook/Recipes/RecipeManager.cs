@@ -18,6 +18,8 @@ namespace CookBook.recipes
 
         private readonly int MAX_CHAR_NAMES = 45;
         private readonly int MAX_CHAR_RECIPE_DESC = 500;
+        private readonly int MAX_CHAR_STEP_DESC = 1000;
+        private readonly int MAX_CHAR_PATH = 255;
 
         /// <summary>
         /// Store all recipe information in the database.
@@ -26,7 +28,7 @@ namespace CookBook.recipes
         public void StoreRecipe(Recipe recipe)
         {
             bool newEntry = recipe.Id == 0;
-
+            
             //Save tags and get tag ids
             var tagIds = new List<int>();
             foreach(String tag in recipe.Tags)
@@ -53,7 +55,7 @@ namespace CookBook.recipes
                 if(step.Id != 0)
                 {
                     stepId = step.Id;
-                    UpdateStepEntry(step);
+                    UpdateStepEntry(step, 0); //Add imageId
                 }
                 else
                 {
@@ -65,9 +67,9 @@ namespace CookBook.recipes
             //Save steps - recipe
             if (newEntry) //TODO -> Check if value is already present (should only be the case, when steps are added afterwards)
             {
-                foreach (int stepId in stepIds)
+                for (int i = 0; i < stepIds.Count; i++) 
                 {
-                    CreateRecipeStepsEntry(recipeId, stepId);
+                    CreateRecipeStepsEntry(recipeId, stepIds[i], i+1);
                 }
                 
             }
@@ -95,7 +97,7 @@ namespace CookBook.recipes
                     var nameParam = new MySqlParameter("@name", MySqlDbType.VarChar, MAX_CHAR_NAMES);
                     var descParam = new MySqlParameter("@desc", MySqlDbType.VarChar, MAX_CHAR_RECIPE_DESC);
                     var creatorParam = new MySqlParameter("@creator", MySqlDbType.VarChar, MAX_CHAR_NAMES);
-                    var imageParam = new MySqlParameter("imageId", MySqlDbType.Int32);
+                    var imageParam = new MySqlParameter("@imageId", MySqlDbType.Int32);
                     command.Parameters.Add(nameParam);
                     command.Parameters.Add(descParam);
                     command.Parameters.Add(creatorParam);
@@ -111,14 +113,13 @@ namespace CookBook.recipes
                     command.Parameters[3].Value = 1; //TODO: Change value
                     returnId = Convert.ToInt32(command.ExecuteScalar());
                 }
-                catch (MySqlException ex)
-                {
-                    //TODO: Log error
-                    Debug.Print("Coulnd't establish SQL Connection: " + ex);
-                }
                 catch (Exception ex)
                 {
-                    Debug.Print("This is an exception: " + ex);
+                    //TODO: Log error
+                    if (ex.GetType() == typeof(MySqlException))
+                    {
+                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                    }
                 }
             }
 
@@ -132,7 +133,40 @@ namespace CookBook.recipes
         private int CreateStepEntry(Step step)
         {
             int stepId = 0;
-            //@steps_description, @steps_timer, @fk_image
+            using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+                    MySqlCommand command = new MySqlCommand(null, connection);
+
+                    // Create and prepare an SQL statement.
+                    command.CommandText = SqlResources.STEPS_INSERT_RETURN;
+                    var descParam = new MySqlParameter("@desc", MySqlDbType.VarChar, MAX_CHAR_STEP_DESC);
+                    var timerParam = new MySqlParameter("@timer", MySqlDbType.Int16);
+                    var imageParam = new MySqlParameter("@imageId", MySqlDbType.Int32);
+                    command.Parameters.Add(descParam);
+                    command.Parameters.Add(timerParam);
+                    command.Parameters.Add(imageParam);
+
+                    // Call Prepare after setting the Commandtext and Parameters.
+                    command.Prepare();
+
+                    // Change parameter values and call ExecuteNonQuery.
+                    command.Parameters[0].Value = step.Description;
+                    command.Parameters[1].Value = step.Timer;
+                    command.Parameters[2].Value = 1; //TODO: Change value
+                    stepId = Convert.ToInt32(command.ExecuteScalar());
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Log error
+                    if (ex.GetType() == typeof(MySqlException))
+                    {
+                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                    }
+                }
+            }
             return stepId;
         }
 
@@ -141,9 +175,42 @@ namespace CookBook.recipes
         /// </summary>
         /// <param name="recipeId">The recipe identifier.</param>
         /// <param name="stepId">The step identifier.</param>
-        private void CreateRecipeStepsEntry(int recipeId, int stepId)
+        private void CreateRecipeStepsEntry(int recipeId, int stepId, int order)
         {
-            //@fk_recipes, @fk_steps, @step_order
+            using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+                    MySqlCommand command = new MySqlCommand(null, connection);
+
+                    // Create and prepare an SQL statement.
+                    command.CommandText = SqlResources.RECIPESTEP_INSERT;
+                    var recipeIdParam = new MySqlParameter("@recipeId", MySqlDbType.Int32);
+                    var stepIdParam = new MySqlParameter("@stepId", MySqlDbType.Int32);
+                    var orderParam = new MySqlParameter("@order", MySqlDbType.Int16);
+                    command.Parameters.Add(recipeIdParam);
+                    command.Parameters.Add(stepIdParam);
+                    command.Parameters.Add(orderParam);
+
+                    // Call Prepare after setting the Commandtext and Parameters.
+                    command.Prepare();
+
+                    // Change parameter values and call ExecuteNonQuery.
+                    command.Parameters[0].Value = recipeId;
+                    command.Parameters[1].Value = stepId;
+                    command.Parameters[2].Value = order;
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Log error
+                    if (ex.GetType() == typeof(MySqlException))
+                    {
+                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -153,7 +220,34 @@ namespace CookBook.recipes
         private int CreateTagEntry(String tag)
         {
             int tagId = 0;
+            using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+                    MySqlCommand command = new MySqlCommand(null, connection);
 
+                    // Create and prepare an SQL statement.
+                    command.CommandText = SqlResources.TAGS_INSERT_RETURN;
+                    var nameParam = new MySqlParameter("@name", MySqlDbType.VarChar, MAX_CHAR_NAMES);
+                    command.Parameters.Add(nameParam);
+
+                    // Call Prepare after setting the Commandtext and Parameters.
+                    command.Prepare();
+
+                    // Change parameter values and call ExecuteNonQuery.
+                    command.Parameters[0].Value = tag;
+                    tagId = Convert.ToInt32(command.ExecuteScalar());
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Log error
+                    if (ex.GetType() == typeof(MySqlException))
+                    {
+                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                    }
+                }
+            }
             return tagId;
         }
 
@@ -165,7 +259,34 @@ namespace CookBook.recipes
         private int CreateImageEntry(String imagePath)
         {
             int imageId = 0;
-            //@storage_Path
+            using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+                    MySqlCommand command = new MySqlCommand(null, connection);
+
+                    // Create and prepare an SQL statement.
+                    command.CommandText = SqlResources.IMAGES_INSERT_RETURN;
+                    var pathParam = new MySqlParameter("@storagePath", MySqlDbType.VarChar, MAX_CHAR_PATH);
+                    command.Parameters.Add(pathParam);
+
+                    // Call Prepare after setting the Commandtext and Parameters.
+                    command.Prepare();
+
+                    // Change parameter values and call ExecuteNonQuery.
+                    command.Parameters[0].Value = imagePath;
+                    imageId = Convert.ToInt32(command.ExecuteScalar());
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Log error
+                    if (ex.GetType() == typeof(MySqlException))
+                    {
+                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                    }
+                }
+            }
             return imageId;
         }
 
@@ -177,7 +298,34 @@ namespace CookBook.recipes
         private int CreateIngredientsEntry(String ingredient)
         {
             int ingredientId = 0;
-            //@ingredients_name, @fk_image
+            using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+                    MySqlCommand command = new MySqlCommand(null, connection);
+
+                    // Create and prepare an SQL statement.
+                    command.CommandText = SqlResources.INGREDIENT_INSERT_RETURN;
+                    var nameParam = new MySqlParameter("@name", MySqlDbType.VarChar, MAX_CHAR_NAMES);
+                    command.Parameters.Add(nameParam);
+
+                    // Call Prepare after setting the Commandtext and Parameters.
+                    command.Prepare();
+
+                    // Change parameter values and call ExecuteNonQuery.
+                    command.Parameters[0].Value = ingredient;
+                    ingredientId = Convert.ToInt32(command.ExecuteScalar());
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Log error
+                    if (ex.GetType() == typeof(MySqlException))
+                    {
+                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                    }
+                }
+            }
             return ingredientId;
         }
 
@@ -189,9 +337,45 @@ namespace CookBook.recipes
         /// <param name="unit_id">The unit identifier.</param>
         private void CreateStepsIngredientsEntry(int stepId, int ingredientsId, int unitId, int quantity)
         {
-            //@fk_steps, @fk_ingredeints, @fk_quantityunits, @fk
+            using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+                    MySqlCommand command = new MySqlCommand(null, connection);
+
+                    // Create and prepare an SQL statement.
+                    command.CommandText = SqlResources.STEPINGREDIENT_INSERT;
+                    var stepIdParam = new MySqlParameter("@stepId", MySqlDbType.Int32);
+                    var ingredientIdParam = new MySqlParameter("@ingredientId", MySqlDbType.Int32);
+                    var unitIdParam = new MySqlParameter("@unitId", MySqlDbType.Int32);
+                    var quantityParam = new MySqlParameter("@quantity", MySqlDbType.Int16);
+                    command.Parameters.Add(stepIdParam);
+                    command.Parameters.Add(ingredientIdParam);
+                    command.Parameters.Add(unitIdParam);
+                    command.Parameters.Add(quantityParam);
+
+                    // Call Prepare after setting the Commandtext and Parameters.
+                    command.Prepare();
+
+                    // Change parameter values and call ExecuteNonQuery.
+                    command.Parameters[0].Value = stepId;
+                    command.Parameters[1].Value = ingredientsId;
+                    command.Parameters[2].Value = unitId;
+                    command.Parameters[3].Value = quantity;
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Log error
+                    if (ex.GetType() == typeof(MySqlException))
+                    {
+                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                    }
+                }
+            }
         }
-        
+
 
         /// <summary>
         /// Updates an existing recipe entry in the database.
@@ -199,16 +383,92 @@ namespace CookBook.recipes
         /// <param name="recipe">The updated recipe</param>
         private void UpdateRecipeEntry(Recipe recipe)
         {
+            using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+                    MySqlCommand command = new MySqlCommand(null, connection);
 
+                    // Create and prepare an SQL statement.
+                    command.CommandText = SqlResources.RECIPES_INSERT_RETURN;
+                    var nameParam = new MySqlParameter("@name", MySqlDbType.VarChar, MAX_CHAR_NAMES);
+                    var descParam = new MySqlParameter("@desc", MySqlDbType.VarChar, MAX_CHAR_RECIPE_DESC);
+                    var creatorParam = new MySqlParameter("@creator", MySqlDbType.VarChar, MAX_CHAR_NAMES);
+                    var imageParam = new MySqlParameter("@imageId", MySqlDbType.Int32);
+                    var idParam = new MySqlParameter("@id", MySqlDbType.Int32);
+                    command.Parameters.Add(nameParam);
+                    command.Parameters.Add(descParam);
+                    command.Parameters.Add(creatorParam);
+                    command.Parameters.Add(imageParam);
+                    command.Parameters.Add(idParam);
+
+                    // Call Prepare after setting the Commandtext and Parameters.
+                    command.Prepare();
+
+                    // Change parameter values and call ExecuteNonQuery.
+                    command.Parameters[0].Value = recipe.Name;
+                    command.Parameters[1].Value = recipe.Description;
+                    command.Parameters[2].Value = recipe.Creator;
+                    command.Parameters[3].Value = 1; //TODO: Change value
+                    command.Parameters[4].Value = recipe.Id;
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Log error
+                    if (ex.GetType() == typeof(MySqlException))
+                    {
+                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                    }
+                }
+            }
         }
 
         /// <summary>
         /// Update an existing recipe step in the database.
         /// </summary>
         /// <param name="step">The updated step.</param>
-        private void UpdateStepEntry(Step step)
+        private void UpdateStepEntry(Step step, int imageId)
         {
-            //@id_steps, @steps_description, @steps_timer, @fk_image
+            using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+                    MySqlCommand command = new MySqlCommand(null, connection);
+
+                    // Create and prepare an SQL statement.
+                    command.CommandText = SqlResources.STEPS_INSERT_RETURN;
+                    var descParam = new MySqlParameter("@desc", MySqlDbType.VarChar, MAX_CHAR_STEP_DESC);
+                    var timerParam = new MySqlParameter("@timer", MySqlDbType.Int16);
+                    var imageParam = new MySqlParameter("@imageId", MySqlDbType.Int32);
+                    var idParam = new MySqlParameter("@id", MySqlDbType.Int32);
+
+                    command.Parameters.Add(descParam);
+                    command.Parameters.Add(timerParam);
+                    command.Parameters.Add(imageParam);
+                    command.Parameters.Add(idParam);
+
+                    // Call Prepare after setting the Commandtext and Parameters.
+                    command.Prepare();
+
+                    // Change parameter values and call ExecuteNonQuery.
+                    command.Parameters[0].Value = step.Description;
+                    command.Parameters[1].Value = step.Timer;
+                    command.Parameters[2].Value = imageId; //TODO: Change value
+                    command.Parameters[3].Value = step.Id;
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Log error
+                    if (ex.GetType() == typeof(MySqlException))
+                    {
+                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -216,9 +476,45 @@ namespace CookBook.recipes
         /// </summary>
         /// <param name="recipeId">The recipe identifier.</param>
         /// <param name="stepId">The step identifier.</param>
-        private void UpdateRecipeStepsEntry(int recipeId, int stepId)
+        private void UpdateRecipeStepsEntry(int recipeStepId, int recipeId, int stepId, int order)
         {
-            //@id_recipes_steps, @fk_recipes, @fk_steps, @step_order
+            using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+                    MySqlCommand command = new MySqlCommand(null, connection);
+
+                    // Create and prepare an SQL statement.
+                    command.CommandText = SqlResources.RECIPESTEP_INSERT;
+                    var recipeIdParam = new MySqlParameter("@recipeId", MySqlDbType.Int32);
+                    var stepIdParam = new MySqlParameter("@stepId", MySqlDbType.Int32);
+                    var orderParam = new MySqlParameter("@order", MySqlDbType.Int16);
+                    var idParam = new MySqlParameter("@id", MySqlDbType.Int32);
+                    command.Parameters.Add(recipeIdParam);
+                    command.Parameters.Add(stepIdParam);
+                    command.Parameters.Add(orderParam);
+                    command.Parameters.Add(idParam);
+
+                    // Call Prepare after setting the Commandtext and Parameters.
+                    command.Prepare();
+
+                    // Change parameter values and call ExecuteNonQuery.
+                    command.Parameters[0].Value = recipeId;
+                    command.Parameters[1].Value = stepId;
+                    command.Parameters[2].Value = order;
+                    command.Parameters[3].Value = recipeStepId;
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Log error
+                    if (ex.GetType() == typeof(MySqlException))
+                    {
+                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -229,9 +525,48 @@ namespace CookBook.recipes
         /// <param name="ingredientID">The ingredient identifier.</param>
         /// <param name="unitId">The unit identifier.</param>
         /// <param name="quantity">The quantity.</param>
-        private void UpdateStepsIngredientsEntry(int id, int stepId, int ingredientID, int unitId, int quantity)
+        private void UpdateStepsIngredientsEntry(int id, int stepId, int ingredientId, int unitId, int quantity)
         {
-            //@id_steps_ingredients, @fk_steps, @fk_ingredients, @fk_quantityunits, @quantity)
+            using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+                    MySqlCommand command = new MySqlCommand(null, connection);
+
+                    // Create and prepare an SQL statement.
+                    command.CommandText = SqlResources.STEPINGREDIENT_INSERT;
+                    var stepIdParam = new MySqlParameter("@stepId", MySqlDbType.Int32);
+                    var ingredientIdParam = new MySqlParameter("@ingredientId", MySqlDbType.Int32);
+                    var unitIdParam = new MySqlParameter("@unitId", MySqlDbType.Int32);
+                    var quantityParam = new MySqlParameter("@quantity", MySqlDbType.Int16);
+                    var idParam = new MySqlParameter("@id", MySqlDbType.Int32);
+                    command.Parameters.Add(stepIdParam);
+                    command.Parameters.Add(ingredientIdParam);
+                    command.Parameters.Add(unitIdParam);
+                    command.Parameters.Add(quantityParam);
+                    command.Parameters.Add(idParam);
+
+                    // Call Prepare after setting the Commandtext and Parameters.
+                    command.Prepare();
+
+                    // Change parameter values and call ExecuteNonQuery.
+                    command.Parameters[0].Value = stepId;
+                    command.Parameters[1].Value = ingredientId;
+                    command.Parameters[2].Value = unitId;
+                    command.Parameters[3].Value = quantity;
+                    command.Parameters[4].Value = id;
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Log error
+                    if (ex.GetType() == typeof(MySqlException))
+                    {
+                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                    }
+                }
+            }
         }
         
     }
