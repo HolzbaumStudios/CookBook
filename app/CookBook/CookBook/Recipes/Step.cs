@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CookBook.Recipes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,18 +8,27 @@ using System.Threading.Tasks;
 namespace CookBook.recipes
 {
     public enum TimeUnits { Seconds, Minutes, Hours };
-    
+
     class Step
     {
         private int id;
         private string description;
         private int timer;
         private string imagePath;
+        private int imageId;
+        private List<Ingredient> ingredients;
 
         public int Id { get; set; }
         public string Description { get; set; }
         public int Timer { get; private set; }
         public string ImagePath { get; set; }
+        public int ImageId { get; set; }
+        public List<Ingredient> Ingredients { get; }
+
+        public Step()
+        {
+            Ingredients = new List<Ingredient>();
+        }
 
         /// <summary>
         /// Gets the input timer value and converts it to seconds.
@@ -41,6 +51,26 @@ namespace CookBook.recipes
                     break;
             }
             timer = seconds;
+        }
+
+        public void AddIngredient(Ingredient ingredient)
+        {
+            try
+            {
+                Ingredients.Add(ingredient);
+            }
+            catch (NullReferenceException ex)
+            {
+                //LOG this exception;
+            }
+        }
+
+        public void RemoveIngredient(Ingredient ingredient)
+        {
+            if (Ingredients.Contains(ingredient))
+            {
+                Ingredients.Remove(ingredient);
+            }
         }
     }
 }

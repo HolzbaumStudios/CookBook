@@ -25,13 +25,13 @@ namespace CookBook.resources
                                                      + "SET fk_recipes=@recipeId, fk_tags=@tagId "
                                                      + "WHERE id_recipes_tags=@id";
         public static readonly String IMAGES_INSERT_RETURN = "INSERT INTO IMAGES (storage_path) "
-                                                     + "VALUES (@storagePath) "
+                                                     + "VALUES (@storagePath); "
                                                      + "SELECT LAST_INSERT_ID()";
         public static readonly String IMAGES_UPDATE = "UPDATE IMAGES "
                                                      + "SET storage_path=@storagePath " 
                                                      + "WHERE id_images=@id";
         public static readonly String STEPS_INSERT_RETURN = "INSERT INTO STEPS (steps_description, steps_timer, fk_image) "
-                                                     + "VALUES (@steps_description, @steps_timer, @fk_image) "
+                                                     + "VALUES (@desc, @timer, @imageId); "
                                                      + "SELECT LAST_INSERT_ID()";
         public static readonly String STEPS_UPDATE = "UPDATE STEPS "
                                                      + "SET steps_description=@desc, steps_timer=@timer, fk_image=@imageId "
@@ -42,23 +42,25 @@ namespace CookBook.resources
                                                      + "SET fk_steps=@stepId, fk_ingredients=@ingredientId, fk_quantityunits=@unitId, quantity=@quantity "
                                                      + "WHERE id_steps_ingredients=@id";
         public static readonly String TAGS_INSERT_RETURN = "INSERT INTO TAGS (tags_name) "
-                                                     + "VALUES (@name) "
+                                                     + "VALUES (@name); "
                                                      + "SELECT LAST_INSERT_ID()";
         public static readonly String TAGS_UPDATE = "UPDATE TAGS " 
                                                      + "SET tags_name=@name "
                                                      + "WHERE id_tags=@id";
-        public static readonly String INGREDIENT_INSERT_RETURN = "INSERT INTO INGREDIENTS (ingredients_name, fk_image) "
-                                                     + "VALUES (@name, @imageId) "
+        public static readonly String INGREDIENT_INSERT_RETURN = "INSERT INTO INGREDIENTS (ingredients_name) "
+                                                     + "VALUES (@name); "
                                                      + "SELECT LAST_INSERT_ID()";
         public static readonly String INGREDIENT_UPDATE = "UPDATE INGREDIENTS "
-                                                     + "SET ingredients_name=@name, fk_image=@image "
+                                                     + "SET ingredients_name=@name "
                                                      + "WHERE id_ingredients=@id";
         public static readonly String QUANTITYUNITS_INSERT_RETURN = "INSERT INTO QUANITYUNITS (quantityunits_name) "
-                                                     + "VALUES (quantityunits_name=@name) "
+                                                     + "VALUES (quantityunits_name=@name); "
                                                      + "SELECT LAST_INSERT_ID()";
         public static readonly String QUANTITYUNITS_UPDATE = "UPDATE QUANTITYUNITS "
                                                      + "SET quantityunits_name=@name "
                                                      + "WHERE id_quantityunits=@id";
+        public static readonly String QUANTITYUNITS_SELECT_ID = "SELECT id_quantityunits FROM QUANTITYUNITS "
+                                                     + "WHERE quantityunits_name=@name";
 
 
 

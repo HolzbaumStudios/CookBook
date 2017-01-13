@@ -13,6 +13,7 @@ namespace CookBook.recipes
         private string description;
         private string creator;
         private string imagePath;
+        private int imageId;
         private List<String> tags;
         private List<Step> steps;
 
@@ -21,6 +22,7 @@ namespace CookBook.recipes
         public string Description { get; set; }
         public string Creator { get; set; }
         public string ImagePath { get; set; }
+        public int ImageId { get; set; }
         public List<Step> Steps { get; private set; }
         public List<String> Tags { get; private set; }
 

@@ -9,6 +9,7 @@ using CookBook.resources;
 using System.Data;
 using System.Diagnostics;
 using MySql.Data.MySqlClient;
+using CookBook.Recipes;
 
 namespace CookBook.recipes
 {
@@ -33,10 +34,15 @@ namespace CookBook.recipes
             var tagIds = new List<int>();
             foreach(String tag in recipe.Tags)
             {
-                int tagId = CreateTagEntry(tag);
+                tagIds.Add(CreateTagEntry(tag));
             }
 
-            //Save recipe and get recipe id
+            //Save recipe (starting by the recipe image) and get recipe id
+            if(recipe.ImageId == 0 && recipe.ImagePath != null)
+            {
+                recipe.ImageId = SaveImage(); //Might need to change logic
+            }
+
             int recipeId;
             if (!newEntry)
             {
@@ -62,20 +68,53 @@ namespace CookBook.recipes
                     stepId = CreateStepEntry(step);
                 }
                 stepIds.Add(stepId);
+
+                foreach (Ingredient ingredient in step.Ingredients)
+                {
+                    if (ingredient.UnitId == 0 || ingredient.Id == 0)
+                    {
+                        if (ingredient.UnitId == 0)
+                        {
+                            ingredient.UnitId = SelectQuantityUnitId(ingredient.Unit);
+                        }
+                        if (ingredient.Id == 0)
+                        {
+                            ingredient.Id = CreateIngredientsEntry(ingredient.Name);
+                        }
+                        CreateStepsIngredientsEntry(step.Id, ingredient);
+                    }
+                    else
+                    {
+                        //TODO: Finish implementation after assignment
+                        int id = 1;
+                        UpdateStepsIngredientsEntry(id, step.Id, ingredient);
+                    }
+                    
+                }
             }
 
-            //Save steps - recipe
+            
             if (newEntry) //TODO -> Check if value is already present (should only be the case, when steps are added afterwards)
             {
-                for (int i = 0; i < stepIds.Count; i++) 
+                //Save steps - recipe
+                for (int i = 0; i < stepIds.Count; i++)
                 {
-                    CreateRecipeStepsEntry(recipeId, stepIds[i], i+1);
+                    CreateRecipeStepsEntry(recipeId, stepIds[i], i + 1);
                 }
-                
+                //Save tag - recipe
+                foreach (int tagId in tagIds)
+                {
+                    CreateRecipeTagEntry(recipeId, tagId);
+                }
             }
 
-            //Save tag - recipe
+        }
 
+        private int SaveImage()
+        {
+            string path = "";
+            //string path = StoreImage();
+            return CreateImageEntry(path);
         }
 
         /// <summary>
@@ -110,7 +149,7 @@ namespace CookBook.recipes
                     command.Parameters[0].Value = recipe.Name;
                     command.Parameters[1].Value = recipe.Description;
                     command.Parameters[2].Value = recipe.Creator;
-                    command.Parameters[3].Value = 1; //TODO: Change value
+                    command.Parameters[3].Value = recipe.ImageId; //TODO: Change value
                     returnId = Convert.ToInt32(command.ExecuteScalar());
                 }
                 catch (Exception ex)
@@ -252,6 +291,46 @@ namespace CookBook.recipes
         }
 
         /// <summary>
+        /// Creates the recipe tag entry.
+        /// </summary>
+        /// <param name="recipeId">The recipe identifier.</param>
+        /// <param name="tagId">The tag identifier.</param>
+        private void CreateRecipeTagEntry(int recipeId, int tagId)
+        {
+            using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+                    MySqlCommand command = new MySqlCommand(null, connection);
+
+                    // Create and prepare an SQL statement.
+                    command.CommandText = SqlResources.RECIPETAG_INSERT;
+                    var recipeIdParam = new MySqlParameter("@recipeId", MySqlDbType.Int32);
+                    var tagIdParam = new MySqlParameter("@tagId", MySqlDbType.Int32);            
+                    command.Parameters.Add(recipeIdParam);
+                    command.Parameters.Add(tagIdParam);
+
+                    // Call Prepare after setting the Commandtext and Parameters.
+                    command.Prepare();
+
+                    // Change parameter values and call ExecuteNonQuery.
+                    command.Parameters[0].Value = recipeId;
+                    command.Parameters[1].Value = tagId;
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Log error
+                    if (ex.GetType() == typeof(MySqlException))
+                    {
+                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Creates the image entry.
         /// </summary>
         /// <param name="imagePath">The image path.</param>
@@ -335,7 +414,7 @@ namespace CookBook.recipes
         /// <param name="step_id">The step identifier.</param>
         /// <param name="ingredients_id">The ingredients identifier.</param>
         /// <param name="unit_id">The unit identifier.</param>
-        private void CreateStepsIngredientsEntry(int stepId, int ingredientsId, int unitId, int quantity)
+        private void CreateStepsIngredientsEntry(int stepId, Ingredient ingredient)
         {
             using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
             {
@@ -360,9 +439,9 @@ namespace CookBook.recipes
 
                     // Change parameter values and call ExecuteNonQuery.
                     command.Parameters[0].Value = stepId;
-                    command.Parameters[1].Value = ingredientsId;
-                    command.Parameters[2].Value = unitId;
-                    command.Parameters[3].Value = quantity;
+                    command.Parameters[1].Value = ingredient.Id;
+                    command.Parameters[2].Value = ingredient.UnitId;
+                    command.Parameters[3].Value = ingredient.Quantity;
                     command.ExecuteNonQuery();
                 }
                 catch (Exception ex)
@@ -410,7 +489,7 @@ namespace CookBook.recipes
                     command.Parameters[0].Value = recipe.Name;
                     command.Parameters[1].Value = recipe.Description;
                     command.Parameters[2].Value = recipe.Creator;
-                    command.Parameters[3].Value = 1; //TODO: Change value
+                    command.Parameters[3].Value = recipe.ImageId; //TODO: Change value
                     command.Parameters[4].Value = recipe.Id;
                     command.ExecuteNonQuery();
                 }
@@ -525,7 +604,7 @@ namespace CookBook.recipes
         /// <param name="ingredientID">The ingredient identifier.</param>
         /// <param name="unitId">The unit identifier.</param>
         /// <param name="quantity">The quantity.</param>
-        private void UpdateStepsIngredientsEntry(int id, int stepId, int ingredientId, int unitId, int quantity)
+        private void UpdateStepsIngredientsEntry(int id, int stepId, Ingredient ingredient)
         {
             using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
             {
@@ -552,9 +631,9 @@ namespace CookBook.recipes
 
                     // Change parameter values and call ExecuteNonQuery.
                     command.Parameters[0].Value = stepId;
-                    command.Parameters[1].Value = ingredientId;
-                    command.Parameters[2].Value = unitId;
-                    command.Parameters[3].Value = quantity;
+                    command.Parameters[1].Value = ingredient.Id;
+                    command.Parameters[2].Value = ingredient.UnitId;
+                    command.Parameters[3].Value = ingredient.Quantity;
                     command.Parameters[4].Value = id;
                     command.ExecuteNonQuery();
                 }
@@ -567,6 +646,57 @@ namespace CookBook.recipes
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Selects the quantity unit identifier.
+        /// </summary>
+        /// <param name="unitName">Name of the unit.</param>
+        /// <returns></returns>
+        private int SelectQuantityUnitId(string unitName)
+        {
+            int id = 0;
+            using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+                    MySqlCommand command = new MySqlCommand(null, connection);
+
+                    // Create and prepare an SQL statement.
+                    command.CommandText = SqlResources.QUANTITYUNITS_SELECT_ID;
+                    var descParam = new MySqlParameter("@name", MySqlDbType.VarChar, MAX_CHAR_NAMES);
+
+                    command.Parameters.Add(descParam);
+
+                    // Call Prepare after setting the Commandtext and Parameters.
+                    command.Prepare();
+
+                    // Change parameter values and call ExecuteNonQuery.
+                    command.Parameters[0].Value = unitName;
+                    MySqlDataReader reader = command.ExecuteReader();
+                    if(reader.Read() && reader[0] != DBNull.Value)
+                    {
+                        try
+                        {
+                            id = Int32.Parse(reader.GetString(0));
+                        }
+                        catch (FormatException ex)
+                        {
+                            //TODO: LOG ERROR
+                        }
+                    } 
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Log error
+                    if (ex.GetType() == typeof(MySqlException))
+                    {
+                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                    }
+                }
+            }
+            return id;
         }
         
     }
