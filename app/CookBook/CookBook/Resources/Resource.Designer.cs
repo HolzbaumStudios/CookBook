@@ -66,9 +66,6 @@ namespace CookBook
 			// aapt resource value: 0x7f050000
 			public const int btnPedro = 2131034112;
 			
-			// aapt resource value: 0x7f050005
-			public const int button1 = 2131034117;
-			
 			// aapt resource value: 0x7f050003
 			public const int clickEvent = 2131034115;
 			

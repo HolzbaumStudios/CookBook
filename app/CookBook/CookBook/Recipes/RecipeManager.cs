@@ -22,6 +22,7 @@ namespace CookBook.recipes
         private readonly int MAX_CHAR_STEP_DESC = 1000;
         private readonly int MAX_CHAR_PATH = 255;
 
+
         /// <summary>
         /// Store all recipe information in the database.
         /// </summary>
@@ -107,6 +108,14 @@ namespace CookBook.recipes
                     CreateRecipeTagEntry(recipeId, tagId);
                 }
             }
+        }
+
+        /// <summary>
+        /// Gets all necessary data for the recipe from the database.
+        /// </summary>
+        /// <param name="recipeId"></param>
+        public void SelectRecipe(int recipeId)
+        {
 
         }
 
@@ -117,6 +126,7 @@ namespace CookBook.recipes
             return CreateImageEntry(path);
         }
 
+        #region Create Queries
         /// <summary>
         /// Creates a new Recipe entry in the database.
         /// </summary>
@@ -454,8 +464,9 @@ namespace CookBook.recipes
                 }
             }
         }
+        #endregion
 
-
+        #region Update Queries
         /// <summary>
         /// Updates an existing recipe entry in the database.
         /// </summary>
@@ -647,6 +658,91 @@ namespace CookBook.recipes
                 }
             }
         }
+        #endregion
+
+        #region Select Queries
+        private List<Recipe> SelectRecipesByName(String name)
+        {
+            List<Recipe> recipe = null;
+            using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+                    MySqlCommand command = new MySqlCommand(null, connection);
+
+                    // Create and prepare an SQL statement.
+                    command.CommandText = SqlResources.RECIPES_SELECT_ALL_BYNAME;
+                    var nameParam = new MySqlParameter("@name", MySqlDbType.VarChar, MAX_CHAR_NAMES);
+
+                    command.Parameters.Add(nameParam);
+
+                    // Call Prepare after setting the Commandtext and Parameters.
+                    command.Prepare();
+
+                    // Change parameter values and call ExecuteReader.
+                    command.Parameters[0].Value = name;
+                    MySqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read() && reader[0] != DBNull.Value)
+                    {
+                        //TODO TODO TODO TODO TODO
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Log error
+                    if (ex.GetType() == typeof(MySqlException))
+                    {
+                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                    }
+                }
+            }
+            return recipe;
+        }
+
+        /// <summary>
+        /// Gets all vallues for a recipe based on the recipe id.
+        /// </summary>
+        /// <param name="id">The id of the recipe</param>
+        /// <returns></returns>
+        private Recipe SelectRecipeById(int id)
+        {
+            Recipe recipe = null;
+            using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+                    MySqlCommand command = new MySqlCommand(null, connection);
+
+                    // Create and prepare an SQL statement.
+                    command.CommandText = SqlResources.RECIPES_SELECT_ALL_BYID;
+                    var nameParam = new MySqlParameter("@id", MySqlDbType.Int32);
+
+                    command.Parameters.Add(nameParam);
+
+                    // Call Prepare after setting the Commandtext and Parameters.
+                    command.Prepare();
+
+                    // Change parameter values and call ExecuteReader.
+                    command.Parameters[0].Value = id;
+                    MySqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read() && reader[0] != DBNull.Value)
+                    {
+                        //TODO TODO TODO TODO TODO
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Log error
+                    if (ex.GetType() == typeof(MySqlException))
+                    {
+                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                    }
+                }
+            }
+            return recipe;
+        }
 
         /// <summary>
         /// Selects the quantity unit identifier.
@@ -672,7 +768,7 @@ namespace CookBook.recipes
                     // Call Prepare after setting the Commandtext and Parameters.
                     command.Prepare();
 
-                    // Change parameter values and call ExecuteNonQuery.
+                    // Change parameter values and call ExecuteReader.
                     command.Parameters[0].Value = unitName;
                     MySqlDataReader reader = command.ExecuteReader();
                     if(reader.Read() && reader[0] != DBNull.Value)
@@ -698,6 +794,7 @@ namespace CookBook.recipes
             }
             return id;
         }
-        
+        #endregion
+
     }
 }
