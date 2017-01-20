@@ -114,9 +114,54 @@ namespace CookBook.recipes
         /// Gets all necessary data for the recipe from the database.
         /// </summary>
         /// <param name="recipeId"></param>
-        public void SelectRecipe(int recipeId)
+        public Recipe SelectRecipe(int recipeId)
         {
+            //Get Recipe from the database
+            Recipe recipe = SelectRecipeById(recipeId);
+            
+            //Get all corresponding step ids
+            List<int> stepIds = SelectStepIdsByRecipeId(recipeId);
+            //Get all steps from the database
+            foreach(int stepId in stepIds)
+            {
+                Step step = SelectStepByStepId(stepId);
+                if(step!=null)
+                {
+                    recipe.AddStep(step);
+                }
+            }
+            //Fill all step values
+            for (int i = 0; i < recipe.Steps.Count; i++) //Can't use foreach, because overwriting the iterator in the loop is not possible
+            {
+                recipe.Steps[i] = GetStepValues(recipe.Steps[i]);
+            }
 
+            //Get all tag ids
+            List<int> tagIds = SelectStepIdsByRecipeId(recipeId);
+            //Get all tags from the database
+            foreach(int tagId in tagIds)
+            {
+                String tag = SelectTagByTagId(tagId);
+                if(!String.IsNullOrEmpty(tag))
+                {
+                    recipe.AddTag(tag);
+                }
+            }
+            
+
+            return recipe;
+        }
+
+        /// <summary>
+        /// Fill in all values for a step and return it to the recipe.
+        /// </summary>
+        private Step GetStepValues(Step step)
+        {
+            Step updatedStep = step;
+            //Set up the ingredients
+
+
+            return updatedStep;
         }
 
         private int SaveImage()
@@ -125,6 +170,15 @@ namespace CookBook.recipes
             //string path = StoreImage();
             return CreateImageEntry(path);
         }
+
+        private String GetImage(int imageId)
+        {
+            String imagePath = String.Empty;
+
+            return imagePath;
+        }
+
+        //----DATABASE QUERIES BEGIN------------------
 
         #region Create Queries
         /// <summary>
@@ -661,6 +715,11 @@ namespace CookBook.recipes
         #endregion
 
         #region Select Queries
+        /// <summary>
+        /// Get a list of recipes based on the recipe name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         private List<Recipe> SelectRecipesByName(String name)
         {
             List<Recipe> recipe = null;
@@ -742,6 +801,54 @@ namespace CookBook.recipes
                 }
             }
             return recipe;
+        }
+
+        /// <summary>
+        /// Get all step ids from the database belonging to the corresponding recipe id.
+        /// </summary>
+        /// <param name="recipeId"></param>
+        /// <returns></returns>
+        private List<int> SelectStepIdsByRecipeId(int recipeId)
+        {
+            var ids = new List<int>();
+
+            return ids;
+        }
+
+        /// <summary>
+        /// Get step based on step id
+        /// </summary>
+        /// <param name="stepId"></param>
+        /// <returns></returns>
+        private Step SelectStepByStepId(int stepId)
+        {
+            var step = new Step();
+
+            return step;
+        }
+
+        /// <summary>
+        /// Get all tag ids from the dataaase belonging to the corresponding recipe id.
+        /// </summary>
+        /// <param name="recipeId"></param>
+        /// <returns></returns>
+        private List<int> SelectTagIdsByRecipeId(int recipeId)
+        {
+            var ids = new List<int>();
+
+            return ids;
+        }
+
+        /// <summary>
+        /// Get tag based on tag id
+        /// </summary>
+        /// <param name="tagId"></param>
+        /// <returns></returns>
+        private String SelectTagByTagId(int tagId)
+        {
+            String tag = String.Empty;
+
+            return tag;
         }
 
         /// <summary>
