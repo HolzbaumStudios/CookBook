@@ -8,15 +8,6 @@ namespace CookBook.recipes
 {
     class Recipe
     {
-        private int id;
-        private string name;
-        private string description;
-        private string creator;
-        private string imagePath;
-        private int imageId;
-        private List<String> tags;
-        private List<Step> steps;
-
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

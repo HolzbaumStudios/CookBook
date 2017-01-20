@@ -65,7 +65,7 @@ namespace CookBook.resources
         public static readonly String STEPINGREDIENT_UPDATE = "UPDATE STEPS_INGREDIENTS "
                                                      + "SET fk_steps=@stepId, fk_ingredients=@ingredientId, fk_quantityunits=@unitId, quantity=@quantity "
                                                      + "WHERE id_steps_ingredients=@id";
-        public static readonly String STEPINGREDIENT_SELECT_ALL_BYTAGID = "SELECT * FROM STEPS_INGREDIENTS "
+        public static readonly String STEPINGREDIENT_SELECT_ALL_BYSTEPID = "SELECT * FROM STEPS_INGREDIENTS "
                                                      + "WHERE fk_steps=@stepId";
         #endregion
         #region Tags
@@ -99,6 +99,8 @@ namespace CookBook.resources
                                                      + "WHERE id_quantityunits=@id";
         public static readonly String QUANTITYUNITS_SELECT_ID = "SELECT id_quantityunits FROM QUANTITYUNITS "
                                                      + "WHERE quantityunits_name=@name";
+        public static readonly String QUANTITYUNITS_SELECT_NAME = "SELECT quantityunits_name FROM QUANTITYUNITS "
+                                                     + "WHERE id_quantityunits=@id";
         #endregion
 
 

@@ -155,6 +155,16 @@ namespace CookBook.recipes
         {
             Step updatedStep = step;
             //Set up the ingredients
+            var ingredients = SelecteIngredientIdsByStepId(step.Id);
+            foreach(var ingredient in ingredients)
+            {
+                //Get the name for the ingredients
+                ingredient.Name = SelectIngredientNameById(ingredient.Id);
+                //Get the name of the quanity units
+                ingredient.Unit = SelectQuanityUnitNameById(ingredient.UnitId);
+                //add to the step
+                updatedStep.AddIngredient(ingredient);
+            }
 
 
             return updatedStep;
@@ -997,6 +1007,100 @@ namespace CookBook.recipes
         }
 
         /// <summary>
+        /// Selectes the ingredient id, unit id and quantity of the ingredient.
+        /// </summary>
+        /// <param name="stepId">The step identifier.</param>
+        /// <returns></returns>
+        private List<Ingredient> SelecteIngredientIdsByStepId(int stepId)
+        {
+            var ingredients = new List<Ingredient>();
+            using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+                    MySqlCommand command = new MySqlCommand(null, connection);
+
+                    // Create and prepare an SQL statement.
+                    command.CommandText = SqlResources.STEPINGREDIENT_SELECT_ALL_BYSTEPID;
+                    var idParam = new MySqlParameter("@stepId", MySqlDbType.Int32);
+
+                    command.Parameters.Add(idParam);
+
+                    // Call Prepare after setting the Commandtext and Parameters.
+                    command.Prepare();
+
+                    // Change parameter values and call ExecuteReader.
+                    command.Parameters[0].Value = stepId;
+                    MySqlDataReader reader = command.ExecuteReader();
+                    int iterator = 0;
+                    while (reader.Read() && reader[iterator] != DBNull.Value)
+                    {
+                        var ingredient = new Ingredient();
+                        ingredient.Id = DBUtils.AsInteger(reader["fk_ingredients"]);
+                        ingredient.UnitId = DBUtils.AsInteger(reader["fk_quantityunits"]);
+                        ingredient.Quantity = DBUtils.AsInteger(reader["quantity"]);
+                        ingredients.Add(ingredient);
+                        iterator++;            
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Log error
+                    if (ex.GetType() == typeof(MySqlException))
+                    {
+                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                    }
+                }
+            }
+            return ingredients;
+        }
+
+        /// <summary>
+        /// Get the ingredient name based on the ingredient id.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        private String SelectIngredientNameById(int id)
+        {
+            String name = String.Empty;
+            using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+                    MySqlCommand command = new MySqlCommand(null, connection);
+
+                    // Create and prepare an SQL statement.
+                    command.CommandText = SqlResources.INGREDIENT_SELECT_NAME_BYID;
+                    var idParam = new MySqlParameter("@id", MySqlDbType.Int32);
+
+                    command.Parameters.Add(idParam);
+
+                    // Call Prepare after setting the Commandtext and Parameters.
+                    command.Prepare();
+
+                    // Change parameter values and call ExecuteReader.
+                    command.Parameters[0].Value = id;
+                    MySqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read() && reader[0] != DBNull.Value)
+                    {
+                        name = DBUtils.AsString(reader["ingredients_name"]);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Log error
+                    if (ex.GetType() == typeof(MySqlException))
+                    {
+                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                    }
+                }
+            }
+            return name;
+        }
+
+        /// <summary>
         /// Selects the quantity unit identifier.
         /// </summary>
         /// <param name="unitName">Name of the unit.</param>
@@ -1045,6 +1149,45 @@ namespace CookBook.recipes
                 }
             }
             return id;
+        }
+
+        private String SelectQuanityUnitNameById(int id)
+        {
+            String name = String.Empty;
+            using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+                    MySqlCommand command = new MySqlCommand(null, connection);
+
+                    // Create and prepare an SQL statement.
+                    command.CommandText = SqlResources.QUANTITYUNITS_SELECT_NAME;
+                    var idParam = new MySqlParameter("@id", MySqlDbType.Int32);
+
+                    command.Parameters.Add(idParam);
+
+                    // Call Prepare after setting the Commandtext and Parameters.
+                    command.Prepare();
+
+                    // Change parameter values and call ExecuteReader.
+                    command.Parameters[0].Value = id;
+                    MySqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read() && reader[0] != DBNull.Value)
+                    {
+                        name = DBUtils.AsString(reader["quantityunits_name"]);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Log error
+                    if (ex.GetType() == typeof(MySqlException))
+                    {
+                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                    }
+                }
+            }
+            return name;
         }
         #endregion
 
