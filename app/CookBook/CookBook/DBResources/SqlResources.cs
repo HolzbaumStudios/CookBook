@@ -27,7 +27,7 @@ namespace CookBook.resources
                                                      + "SET fk_recipes=@recipeId, fk_steps=@stepId, step_order=@order "
                                                      + "WHERE id_recipes_stesp=@id";
         public static readonly String RECIPESTEP_SELECT_ALL_BYRECID = "SELECT * FROM RECIPES_STEPS "
-                                                     + "WHERE fk_recipes@recipeId "
+                                                     + "WHERE fk_recipes=@recipeId "
                                                      + "ORDER BY step_order ASC";
         #endregion
         #region Recipes_Tags
@@ -37,7 +37,7 @@ namespace CookBook.resources
                                                      + "SET fk_recipes=@recipeId, fk_tags=@tagId "
                                                      + "WHERE id_recipes_tags=@id";
         public static readonly String RECIPETAG_SELECT_ALL_BYRECID = "SELECT * FROM RECIPES_TAGS "
-                                                     + "WHERE fk_recipes=recipeId";
+                                                     + "WHERE fk_recipes=@recipeId";
         #endregion
         #region Images
         public static readonly String IMAGES_INSERT_RETURN = "INSERT INTO IMAGES (storage_path) "
@@ -75,7 +75,7 @@ namespace CookBook.resources
         public static readonly String TAGS_UPDATE = "UPDATE TAGS " 
                                                      + "SET tags_name=@name "
                                                      + "WHERE id_tags=@id";
-        public static readonly String TAGS_SELECT_NAME_BYID = "SELECT tags_name=@name "
+        public static readonly String TAGS_SELECT_NAME_BYID = "SELECT tags_name FROM TAGS "
                                                      + "WHERE id_tags=@id";
         #endregion
         #region Ingredients

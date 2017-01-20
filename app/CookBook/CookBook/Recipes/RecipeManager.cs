@@ -124,11 +124,7 @@ namespace CookBook.recipes
             //Get all steps from the database
             foreach(int stepId in stepIds)
             {
-                Step step = SelectStepByStepId(stepId);
-                if(step!=null)
-                {
-                    recipe.AddStep(step);
-                }
+                recipe.AddStep(SelectStepByStepId(stepId));      
             }
             //Fill all step values
             for (int i = 0; i < recipe.Steps.Count; i++) //Can't use foreach, because overwriting the iterator in the loop is not possible
@@ -137,7 +133,7 @@ namespace CookBook.recipes
             }
 
             //Get all tag ids
-            List<int> tagIds = SelectStepIdsByRecipeId(recipeId);
+            List<int> tagIds = SelectTagIdsByRecipeId(recipeId);
             //Get all tags from the database
             foreach(int tagId in tagIds)
             {
@@ -744,7 +740,7 @@ namespace CookBook.recipes
                     MySqlDataReader reader = command.ExecuteReader();
                     if (reader.Read() && reader[0] != DBNull.Value)
                     {
-                        //TODO TODO TODO TODO TODO
+                        //TODO TODO
                     }
                 }
                 catch (Exception ex)
@@ -760,13 +756,13 @@ namespace CookBook.recipes
         }
 
         /// <summary>
-        /// Gets all vallues for a recipe based on the recipe id.
+        /// Gets all values for a recipe based on the recipe id.
         /// </summary>
         /// <param name="id">The id of the recipe</param>
         /// <returns></returns>
         private Recipe SelectRecipeById(int id)
         {
-            Recipe recipe = null;
+            Recipe recipe = new Recipe();
             using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
             {
                 try
@@ -776,9 +772,9 @@ namespace CookBook.recipes
 
                     // Create and prepare an SQL statement.
                     command.CommandText = SqlResources.RECIPES_SELECT_ALL_BYID;
-                    var nameParam = new MySqlParameter("@id", MySqlDbType.Int32);
+                    var idParam = new MySqlParameter("@id", MySqlDbType.Int32);
 
-                    command.Parameters.Add(nameParam);
+                    command.Parameters.Add(idParam);
 
                     // Call Prepare after setting the Commandtext and Parameters.
                     command.Prepare();
@@ -788,7 +784,11 @@ namespace CookBook.recipes
                     MySqlDataReader reader = command.ExecuteReader();
                     if (reader.Read() && reader[0] != DBNull.Value)
                     {
-                        //TODO TODO TODO TODO TODO
+                        recipe.Id = id;
+                        recipe.Name = DBUtils.AsString(reader["recipes_name"]);
+                        recipe.Description = DBUtils.AsString(reader["recipes_description"]);
+                        recipe.Creator = DBUtils.AsString(reader["recipes_creator"]);
+                        recipe.ImageId = DBUtils.AsInteger(reader["fk_image"]);
                     }
                 }
                 catch (Exception ex)
@@ -811,7 +811,46 @@ namespace CookBook.recipes
         private List<int> SelectStepIdsByRecipeId(int recipeId)
         {
             var ids = new List<int>();
+            using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+                    MySqlCommand command = new MySqlCommand(null, connection);
 
+                    // Create and prepare an SQL statement.
+                    command.CommandText = SqlResources.RECIPESTEP_SELECT_ALL_BYRECID;
+                    var idParam = new MySqlParameter("@recipeId", MySqlDbType.Int32);
+
+                    command.Parameters.Add(idParam);
+
+                    // Call Prepare after setting the Commandtext and Parameters.
+                    command.Prepare();
+
+                    // Change parameter values and call ExecuteReader.
+                    command.Parameters[0].Value = recipeId;
+                    MySqlDataReader reader = command.ExecuteReader();
+                    int iterator = 0;
+                    while (reader.Read() && reader[iterator] != DBNull.Value)
+                    {
+                        int stepId = DBUtils.AsInteger(reader["fk_steps"]);
+                        if (stepId != 0)
+                        {
+                            ids.Add(stepId);
+                        }
+                        iterator++;
+                    }
+                    
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Log error
+                    if (ex.GetType() == typeof(MySqlException))
+                    {
+                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                    }
+                }
+            }
             return ids;
         }
 
@@ -823,7 +862,42 @@ namespace CookBook.recipes
         private Step SelectStepByStepId(int stepId)
         {
             var step = new Step();
+            using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+                    MySqlCommand command = new MySqlCommand(null, connection);
 
+                    // Create and prepare an SQL statement.
+                    command.CommandText = SqlResources.STEPS_SELECT_ALL_BYID;
+                    var idParam = new MySqlParameter("@id", MySqlDbType.Int32);
+
+                    command.Parameters.Add(idParam);
+
+                    // Call Prepare after setting the Commandtext and Parameters.
+                    command.Prepare();
+
+                    // Change parameter values and call ExecuteReader.
+                    command.Parameters[0].Value = stepId;
+                    MySqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read() && reader[0] != DBNull.Value)
+                    {
+                        step.Id = stepId;
+                        step.Description = DBUtils.AsString(reader["steps_description"]);
+                        step.SetTimer(DBUtils.AsInteger(reader["steps_timer"]), TimeUnits.Seconds);
+                        step.ImageId = DBUtils.AsInteger(reader["fk_image"]);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Log error
+                    if (ex.GetType() == typeof(MySqlException))
+                    {
+                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                    }
+                }
+            }
             return step;
         }
 
@@ -835,7 +909,46 @@ namespace CookBook.recipes
         private List<int> SelectTagIdsByRecipeId(int recipeId)
         {
             var ids = new List<int>();
+            using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+                    MySqlCommand command = new MySqlCommand(null, connection);
 
+                    // Create and prepare an SQL statement.
+                    command.CommandText = SqlResources.RECIPETAG_SELECT_ALL_BYRECID;
+                    var idParam = new MySqlParameter("@recipeId", MySqlDbType.Int32);
+
+                    command.Parameters.Add(idParam);
+
+                    // Call Prepare after setting the Commandtext and Parameters.
+                    command.Prepare();
+
+                    // Change parameter values and call ExecuteReader.
+                    command.Parameters[0].Value = recipeId;
+                    MySqlDataReader reader = command.ExecuteReader();
+                    int iterator = 0;
+                    while (reader.Read() && reader[iterator] != DBNull.Value)
+                    {
+                        int tagId = DBUtils.AsInteger(reader["fk_tags"]);
+                        if (tagId != 0)
+                        {
+                            ids.Add(tagId);
+                        }
+                        iterator++;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Log error
+                    if (ex.GetType() == typeof(MySqlException))
+                    {
+                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                    }
+                }
+            }
             return ids;
         }
 
@@ -847,7 +960,39 @@ namespace CookBook.recipes
         private String SelectTagByTagId(int tagId)
         {
             String tag = String.Empty;
+            using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+                    MySqlCommand command = new MySqlCommand(null, connection);
 
+                    // Create and prepare an SQL statement.
+                    command.CommandText = SqlResources.TAGS_SELECT_NAME_BYID;
+                    var idParam = new MySqlParameter("@id", MySqlDbType.Int32);
+
+                    command.Parameters.Add(idParam);
+
+                    // Call Prepare after setting the Commandtext and Parameters.
+                    command.Prepare();
+
+                    // Change parameter values and call ExecuteReader.
+                    command.Parameters[0].Value = tagId;
+                    MySqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read() && reader[0] != DBNull.Value)
+                    {
+                        tag = DBUtils.AsString(reader["tags_name"]);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Log error
+                    if (ex.GetType() == typeof(MySqlException))
+                    {
+                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                    }
+                }
+            }
             return tag;
         }
 
