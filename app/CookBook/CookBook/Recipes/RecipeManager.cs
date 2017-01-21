@@ -111,6 +111,16 @@ namespace CookBook.recipes
         }
 
         /// <summary>
+        /// Returns a list of recipes, where the name contains the searchstring
+        /// </summary>
+        /// <param name="searchString"></param>
+        /// <returns></returns>
+        public List<Recipe> GetListOfRecipesByName(String searchString)
+        {
+            return SelectRecipesByName(searchString);
+        }
+
+        /// <summary>
         /// Gets all necessary data for the recipe from the database.
         /// </summary>
         /// <param name="recipeId"></param>
@@ -728,7 +738,7 @@ namespace CookBook.recipes
         /// <returns></returns>
         private List<Recipe> SelectRecipesByName(String name)
         {
-            List<Recipe> recipe = null;
+            List<Recipe> recipes = null;
             using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
             {
                 try
@@ -748,9 +758,16 @@ namespace CookBook.recipes
                     // Change parameter values and call ExecuteReader.
                     command.Parameters[0].Value = name;
                     MySqlDataReader reader = command.ExecuteReader();
-                    if (reader.Read() && reader[0] != DBNull.Value)
+                    int iterator = 0;
+                    while (reader.Read() && reader[iterator] != DBNull.Value)
                     {
-                        //TODO TODO
+                        Recipe recipe = new Recipe();
+                        recipe.Name = DBUtils.AsString(reader["recipes_name"]);
+                        recipe.Description = DBUtils.AsString(reader["recipes_description"]);
+                        recipe.Creator = DBUtils.AsString(reader["recipes_creator"]);
+                        recipe.ImageId = DBUtils.AsInteger(reader["fk_image"]);
+                        recipes.Add(recipe);
+                        iterator++;
                     }
                 }
                 catch (Exception ex)
@@ -762,7 +779,7 @@ namespace CookBook.recipes
                     }
                 }
             }
-            return recipe;
+            return recipes;
         }
 
         /// <summary>
