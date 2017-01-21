@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+    <ImageView
+        android:src="@drawable/recipes"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:id="@+id/imageViewRecipeDetailsImage" />
+    <TextView
+        android:text="Pasta con BroWi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:gravity="center"
+        android:textSize="50sp"
+        android:textAllCaps="true"
+        android:id="@+id/textViewRecipeDetailsTitle" />
+    <TextView
+        android:text="Dies ist ein Beispieltext, wie die Description aussehen könnte. Verschiedene Texte können hier gepostet werden.         Weiter geht es mit einem zweiten Text über nichts ausser dem was ich geschrieben habe.         und dies wäre ein dritter Text der noch nicht festgelegt wurde."
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:id="@+id/textViewRecipeDetailsDescription" />
+    <TextView
+        android:text="Hier steht der Autor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:textSize="20sp"
+        android:textColor="@android:color/holo_orange_light"
+        android:gravity="center"
+        android:id="@+id/textViewRecipeDetailsAuthor" />
+    <Button
+        android:text="Prepare!"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:textSize="30sp"
+        android:id="@+id/buttonRecipeDetailsPrepare" />
+</LinearLayout>

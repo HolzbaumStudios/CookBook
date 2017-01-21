@@ -55,7 +55,7 @@ namespace CookBook
 
             if (row == null)
             {
-                row = LayoutInflater.From(recipeContext).Inflate(Resource.Layout.listItemRecipes, null, false);
+                row = LayoutInflater.From(recipeContext).Inflate(Resource.Layout.RecipesListItems, null, false);
             }
 
             // Refferenz zum Textelement im View
