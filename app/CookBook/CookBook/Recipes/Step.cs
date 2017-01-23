@@ -9,15 +9,8 @@ namespace CookBook.recipes
 {
     public enum TimeUnits { Seconds, Minutes, Hours };
 
-    class Step
+    public class Step
     {
-        private int id;
-        private string description;
-        private int timer;
-        private string imagePath;
-        private int imageId;
-        private List<Ingredient> ingredients;
-
         public int Id { get; set; }
         public string Description { get; set; }
         public int Timer { get; private set; }
@@ -50,7 +43,7 @@ namespace CookBook.recipes
                     seconds = amount;
                     break;
             }
-            timer = seconds;
+            Timer = seconds;
         }
 
         public void AddIngredient(Ingredient ingredient)

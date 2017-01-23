@@ -12,19 +12,12 @@ using Android.Widget;
 
 namespace CookBook.Recipes
 {
-    class Ingredient
+    public class Ingredient
     {
-        string name;
-        int id;
-        float quantity;
-        string unit;
-        int unitId;
-
         public string Name { get; set; }
         public int Id { get; set; }
         public float Quantity { get; set; }
         public string Unit { get; set; }
         public int UnitId { get; set; }
-
     }
 }
