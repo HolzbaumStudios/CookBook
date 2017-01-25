@@ -10,14 +10,24 @@ using System.Windows.Forms;
 
 namespace AdminConsole
 {
-    public partial class Form1 : Form
+    public partial class AdminForm : Form
     {
-        public Form1()
+        public AdminForm()
         {
             InitializeComponent();
         }
 
         private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TextBox_RecipeName_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }
