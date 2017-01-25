@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using CookBook.recipes;
 using CookBook.Recipes;
+using System.Text.RegularExpressions;
 
 namespace AdminConsole
 {
@@ -26,18 +27,30 @@ namespace AdminConsole
             recipe.Creator = TextBox_Creator.Text;
             recipe.Description = TextBox_Description.Text;
             var stepDataSet = DataGrid_Steps;
-            foreach(DataRow row in stepDataSet.Rows)
+            var tagStringWithoutSpace = RemoveWhiteSpace(TextBox_Tags.Text);
+            var tags = tagStringWithoutSpace.Split(';');
+            foreach(String tag in tags)
             {
-                String stepDescription = (String)row.ItemArray.GetValue(0);
-                String ingredientString = (String)row.ItemArray.GetValue(1);
-                int timer = Int32.Parse((String)row.ItemArray.GetValue(2));
-                String timeUnit = row.ItemArray.GetValue(3).ToString();
+                recipe.AddTag(tag);
+            }
+            foreach(DataGridViewRow row in stepDataSet.Rows)
+            {
+                if (row.Cells[0].Value != null)
+                {
+                    String stepDescription = (String)row.Cells[0].Value;
+                    String ingredientString = (String)row.Cells[1].Value;
+                    int timer = Int32.Parse((String)row.Cells[2].Value);
+                    String timeUnit = row.Cells[3].Value.ToString();
 
-                Step newStep = new Step();
-                newStep.Description = stepDescription;
-                newStep.SetTimer(timer, GetTimeUnit(timeUnit));
-                ProcessIngredient(ref newStep, ingredientString);
-                recipe.AddStep(newStep);
+                    Step newStep = new Step();
+                    newStep.Description = stepDescription;
+                    newStep.SetTimer(timer, GetTimeUnit(timeUnit));
+                    if (ingredientString != null)
+                    {
+                        ProcessIngredient(ref newStep, ingredientString);
+                    }
+                    recipe.AddStep(newStep);
+                }
             }
             var rm = new RecipeManager();
             rm.StoreRecipe(recipe);
@@ -66,13 +79,19 @@ namespace AdminConsole
             {
                 var newIngredient = new Ingredient();
                 String[] splitIngredient = ingredient.Split(',');
-                if (splitIngredient != null && splitIngredient.Length == 2)
+                if (splitIngredient != null && splitIngredient.Length == 3)
                 {
                     newIngredient.Name = splitIngredient[0];
-                    newIngredient.Unit = splitIngredient[1];
+                    newIngredient.Quantity = float.Parse(RemoveWhiteSpace(splitIngredient[1]));
+                    newIngredient.Unit = RemoveWhiteSpace(splitIngredient[2]);
                 }
                 step.AddIngredient(newIngredient);
             }
+        }
+
+        private String RemoveWhiteSpace(String text)
+        {
+            return Regex.Replace(text, @"\s+", "");
         }
     }
 }

@@ -40,6 +40,8 @@
             this.Timer = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TimeUnit = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Button_Save = new System.Windows.Forms.Button();
+            this.TextBox_Tags = new System.Windows.Forms.TextBox();
+            this.Label_Tags = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DataGrid_Steps)).BeginInit();
             this.SuspendLayout();
             // 
@@ -100,7 +102,7 @@
             this.Ingredients,
             this.Timer,
             this.TimeUnit});
-            this.DataGrid_Steps.Location = new System.Drawing.Point(16, 137);
+            this.DataGrid_Steps.Location = new System.Drawing.Point(16, 169);
             this.DataGrid_Steps.Name = "DataGrid_Steps";
             this.DataGrid_Steps.Size = new System.Drawing.Size(745, 167);
             this.DataGrid_Steps.TabIndex = 3;
@@ -134,7 +136,7 @@
             // 
             // Button_Save
             // 
-            this.Button_Save.Location = new System.Drawing.Point(634, 313);
+            this.Button_Save.Location = new System.Drawing.Point(634, 342);
             this.Button_Save.Name = "Button_Save";
             this.Button_Save.Size = new System.Drawing.Size(127, 23);
             this.Button_Save.TabIndex = 4;
@@ -142,15 +144,33 @@
             this.Button_Save.UseVisualStyleBackColor = true;
             this.Button_Save.Click += new System.EventHandler(this.Button_Save_Click);
             // 
+            // TextBox_Tags
+            // 
+            this.TextBox_Tags.Location = new System.Drawing.Point(16, 133);
+            this.TextBox_Tags.Name = "TextBox_Tags";
+            this.TextBox_Tags.Size = new System.Drawing.Size(199, 20);
+            this.TextBox_Tags.TabIndex = 5;
+            // 
+            // Label_Tags
+            // 
+            this.Label_Tags.AutoSize = true;
+            this.Label_Tags.Location = new System.Drawing.Point(13, 117);
+            this.Label_Tags.Name = "Label_Tags";
+            this.Label_Tags.Size = new System.Drawing.Size(31, 13);
+            this.Label_Tags.TabIndex = 0;
+            this.Label_Tags.Text = "Tags";
+            // 
             // AdminForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(774, 348);
+            this.ClientSize = new System.Drawing.Size(774, 377);
+            this.Controls.Add(this.TextBox_Tags);
             this.Controls.Add(this.Button_Save);
             this.Controls.Add(this.DataGrid_Steps);
             this.Controls.Add(this.Label_Description);
             this.Controls.Add(this.TextBox_Creator);
+            this.Controls.Add(this.Label_Tags);
             this.Controls.Add(this.Lable_Creator);
             this.Controls.Add(this.TextBox_Description);
             this.Controls.Add(this.TextBox_RecipeName);
@@ -177,6 +197,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Timer;
         private System.Windows.Forms.DataGridViewComboBoxColumn TimeUnit;
         private System.Windows.Forms.Button Button_Save;
+        private System.Windows.Forms.TextBox TextBox_Tags;
+        private System.Windows.Forms.Label Label_Tags;
     }
 }
 
