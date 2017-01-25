@@ -12,7 +12,7 @@ namespace CookBook.utils.Tests
     public class PathUtilsTests
     {
         [TestMethod()]
-        public void mergedPathTest()
+        public void MergedPathTest()
         {
             String path = @"/Path/";
             String path2 = @"/Path";
