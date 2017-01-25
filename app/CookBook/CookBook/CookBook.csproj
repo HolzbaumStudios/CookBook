@@ -60,6 +60,7 @@
     <Compile Include="Recipes\Ingredient.cs" />
     <Compile Include="Recipes\Recipe.cs" />
     <Compile Include="Recipes\RecipeManager.cs" />
+    <Compile Include="Recipes\ShoppingList.cs" />
     <Compile Include="Recipes\Step.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
