@@ -49,9 +49,9 @@ namespace CookBook.Recipes
     /// <summary>
     /// A reduced form of Ingredient.cs, carrying only the necessary data for the shopping list.
     /// </summary>
-    class ListIngredient
+    public class ListIngredient
     {
-        private ListIngredient(String name, int amount, String unit)
+        public ListIngredient(String name, int amount, String unit)
         {
             ingredientName = name;
             ingredientAmount = amount;
