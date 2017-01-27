@@ -12,7 +12,7 @@ using Android.Widget;
 
 namespace CookBook
 {
-    [Activity(Label = "Homescreen", MainLauncher =true)]
+    [Activity(Label = "Homescreen", MainLauncher =false)]
     public class HomescreenActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)

@@ -9,16 +9,17 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using CookBook.recipes;
 
 namespace CookBook
 {
     // BaseAdapater ist eine abstrakte Klasse und deshalb müssen vorgegebene Funktionen implementiert werden
-    class RecipesAdapter : BaseAdapter<RecipeTest> //statt string
+    class RecipesAdapter : BaseAdapter<Recipe> //statt string
     {
-        private List<RecipeTest> myRecipes;
+        private List<Recipe> myRecipes; //statt List<RecipeTest>
         private Context recipeContext;
 
-        public RecipesAdapter(Context context, List<RecipeTest> recipes) //statt string
+        public RecipesAdapter(Context context, List<Recipe> recipes) //statt List<RecipeTest>
         {
             myRecipes = recipes;
             recipeContext = context;
@@ -40,7 +41,7 @@ namespace CookBook
         }
 
         //
-        public override RecipeTest this[int position]
+        public override Recipe this[int position] //statt RecipeTest
         {
             get
             {
@@ -60,7 +61,7 @@ namespace CookBook
 
             // Refferenz zum Textelement im View
             TextView recipeName = row.FindViewById<TextView>(Resource.Id.recipeName);
-            recipeName.Text = myRecipes[position].RecipeName;
+            recipeName.Text = myRecipes[position].Name; //statt recipename
 
             return row;
         }
