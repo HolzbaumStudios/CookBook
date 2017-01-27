@@ -12,7 +12,7 @@ using Android.Widget;
 
 namespace CookBook
 {
-    [Activity(Label = "Homescreen", MainLauncher =false)]
+    [Activity(Label = "Homescreen", MainLauncher =true)]
     public class HomescreenActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -25,8 +25,6 @@ namespace CookBook
                 {
                     var myIntent = new Intent(this, typeof(RecipesActivity));
                     StartActivityForResult(myIntent, 0);
-                    //SetContentView(Resource.Layout.Recipes);
-
                 };
         }
     }

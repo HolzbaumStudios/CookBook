@@ -14,12 +14,12 @@ using CookBook.recipes;
 namespace CookBook
 {
     // BaseAdapater ist eine abstrakte Klasse und deshalb müssen vorgegebene Funktionen implementiert werden
-    class RecipesAdapter : BaseAdapter<Recipe> //statt string
+    class RecipesAdapter : BaseAdapter<Recipe>
     {
-        private List<Recipe> myRecipes; //statt List<RecipeTest>
+        private List<Recipe> myRecipes;
         private Context recipeContext;
 
-        public RecipesAdapter(Context context, List<Recipe> recipes) //statt List<RecipeTest>
+        public RecipesAdapter(Context context, List<Recipe> recipes)
         {
             myRecipes = recipes;
             recipeContext = context;
@@ -41,7 +41,7 @@ namespace CookBook
         }
 
         //
-        public override Recipe this[int position] //statt RecipeTest
+        public override Recipe this[int position]
         {
             get
             {
@@ -49,7 +49,6 @@ namespace CookBook
             }
         }
 
-        //around 10
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
             View row = convertView;
@@ -61,7 +60,7 @@ namespace CookBook
 
             // Refferenz zum Textelement im View
             TextView recipeName = row.FindViewById<TextView>(Resource.Id.recipeName);
-            recipeName.Text = myRecipes[position].Name; //statt recipename
+            recipeName.Text = myRecipes[position].Name;
 
             return row;
         }
