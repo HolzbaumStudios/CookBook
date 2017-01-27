@@ -121,6 +121,15 @@ namespace CookBook.recipes
         }
 
         /// <summary>
+        /// Gets the list of all recipes.
+        /// </summary>
+        /// <returns></returns>
+        public List<Recipe> GetListOfAllRecipes()
+        {
+            return SelectRecipesAll();
+        }
+
+        /// <summary>
         /// Gets all necessary data for the recipe from the database.
         /// </summary>
         /// <param name="recipeId"></param>
@@ -757,6 +766,47 @@ namespace CookBook.recipes
 
                     // Change parameter values and call ExecuteReader.
                     command.Parameters[0].Value = name;
+                    MySqlDataReader reader = command.ExecuteReader();
+                    int iterator = 0;
+                    while (reader.Read() && reader[iterator] != DBNull.Value)
+                    {
+                        Recipe recipe = new Recipe();
+                        recipe.Name = DBUtils.AsString(reader["recipes_name"]);
+                        recipe.Description = DBUtils.AsString(reader["recipes_description"]);
+                        recipe.Creator = DBUtils.AsString(reader["recipes_creator"]);
+                        recipe.ImageId = DBUtils.AsInteger(reader["fk_image"]);
+                        recipes.Add(recipe);
+                        iterator++;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Log error
+                    if (ex.GetType() == typeof(MySqlException))
+                    {
+                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                    }
+                }
+            }
+            return recipes;
+        }
+
+        private List<Recipe> SelectRecipesAll()
+        {
+            List<Recipe> recipes = null;
+            using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+                    MySqlCommand command = new MySqlCommand(null, connection);
+
+                    // Create and prepare an SQL statement.
+                    command.CommandText = SqlResources.RECIPES_SELECT_ALL;
+
+                    // Call Prepare after setting the Commandtext and Parameters.
+                    command.Prepare();
+
                     MySqlDataReader reader = command.ExecuteReader();
                     int iterator = 0;
                     while (reader.Read() && reader[iterator] != DBNull.Value)

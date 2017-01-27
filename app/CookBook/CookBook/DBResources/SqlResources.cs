@@ -19,6 +19,7 @@ namespace CookBook.resources
                                                      + "WHERE recipes_name LIKE %@name%";
         public static readonly String RECIPES_SELECT_ALL_BYID = "SELECT * FROM RECIPES "
                                                      + "WHERE id_recipes=@id";
+        public static readonly String RECIPES_SELECT_ALL = "SELECT * FROM RECIPES";
         #endregion
         #region Recipes_Steps
         public static readonly String RECIPESTEP_INSERT = "INSERT INTO RECIPES_STEPS (fk_recipes, fk_steps, step_order) "
