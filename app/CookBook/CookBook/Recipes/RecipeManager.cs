@@ -10,12 +10,14 @@ using System.Data;
 using System.Diagnostics;
 using MySql.Data.MySqlClient;
 using CookBook.Recipes;
+using CookBook.Utils;
 
 namespace CookBook.recipes
 {
     public class RecipeManager
     {
-        public static Recipe activeRecipeInstance;
+        private static readonly String LOGGER_TAG = "CookBook.Utils.RecipeManager";
+        private CookBookLogger logger = new CookBookLogger(LOGGER_TAG);
 
         private readonly int MAX_CHAR_NAMES = 45;
         private readonly int MAX_CHAR_RECIPE_DESC = 500;
@@ -243,10 +245,9 @@ namespace CookBook.recipes
                 }
                 catch (Exception ex)
                 {
-                    //TODO: Log error
                     if (ex.GetType() == typeof(MySqlException))
                     {
-                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                        logger.WriteLog("Coulnd't establish SQL Connection: " + ex, LoggerType.Error);
                     }
                 }
             }
@@ -288,10 +289,9 @@ namespace CookBook.recipes
                 }
                 catch (Exception ex)
                 {
-                    //TODO: Log error
                     if (ex.GetType() == typeof(MySqlException))
                     {
-                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                        logger.WriteLog("Coulnd't establish SQL Connection: " + ex, LoggerType.Error);
                     }
                 }
             }
@@ -332,10 +332,9 @@ namespace CookBook.recipes
                 }
                 catch (Exception ex)
                 {
-                    //TODO: Log error
                     if (ex.GetType() == typeof(MySqlException))
                     {
-                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                        logger.WriteLog("Coulnd't establish SQL Connection: " + ex, LoggerType.Error);
                     }
                 }
             }
@@ -369,10 +368,9 @@ namespace CookBook.recipes
                 }
                 catch (Exception ex)
                 {
-                    //TODO: Log error
                     if (ex.GetType() == typeof(MySqlException))
                     {
-                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                        logger.WriteLog("Coulnd't establish SQL Connection: " + ex, LoggerType.Error);
                     }
                 }
             }
@@ -410,10 +408,9 @@ namespace CookBook.recipes
                 }
                 catch (Exception ex)
                 {
-                    //TODO: Log error
                     if (ex.GetType() == typeof(MySqlException))
                     {
-                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                        logger.WriteLog("Coulnd't establish SQL Connection: " + ex, LoggerType.Error);
                     }
                 }
             }
@@ -448,10 +445,9 @@ namespace CookBook.recipes
                 }
                 catch (Exception ex)
                 {
-                    //TODO: Log error
                     if (ex.GetType() == typeof(MySqlException))
                     {
-                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                        logger.WriteLog("Coulnd't establish SQL Connection: " + ex, LoggerType.Error);
                     }
                 }
             }
@@ -487,10 +483,9 @@ namespace CookBook.recipes
                 }
                 catch (Exception ex)
                 {
-                    //TODO: Log error
                     if (ex.GetType() == typeof(MySqlException))
                     {
-                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                        logger.WriteLog("Coulnd't establish SQL Connection: " + ex, LoggerType.Error);
                     }
                 }
             }
@@ -535,10 +530,9 @@ namespace CookBook.recipes
                 }
                 catch (Exception ex)
                 {
-                    //TODO: Log error
                     if (ex.GetType() == typeof(MySqlException))
                     {
-                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                        logger.WriteLog("Coulnd't establish SQL Connection: " + ex, LoggerType.Error);
                     }
                 }
             }
@@ -588,7 +582,7 @@ namespace CookBook.recipes
                     //TODO: Log error
                     if (ex.GetType() == typeof(MySqlException))
                     {
-                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                        logger.WriteLog("Coulnd't establish SQL Connection: " + ex, LoggerType.Error);
                     }
                 }
             }
@@ -634,7 +628,7 @@ namespace CookBook.recipes
                     //TODO: Log error
                     if (ex.GetType() == typeof(MySqlException))
                     {
-                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                        logger.WriteLog("Coulnd't establish SQL Connection: " + ex, LoggerType.Error);
                     }
                 }
             }
@@ -680,7 +674,7 @@ namespace CookBook.recipes
                     //TODO: Log error
                     if (ex.GetType() == typeof(MySqlException))
                     {
-                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                        logger.WriteLog("Coulnd't establish SQL Connection: " + ex, LoggerType.Error);
                     }
                 }
             }
@@ -732,7 +726,7 @@ namespace CookBook.recipes
                     //TODO: Log error
                     if (ex.GetType() == typeof(MySqlException))
                     {
-                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                        logger.WriteLog("Coulnd't establish SQL Connection: " + ex, LoggerType.Error);
                     }
                 }
             }
@@ -785,7 +779,7 @@ namespace CookBook.recipes
                     //TODO: Log error
                     if (ex.GetType() == typeof(MySqlException))
                     {
-                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                        logger.WriteLog("Coulnd't establish SQL Connection: " + ex, LoggerType.Error);
                     }
                 }
             }
@@ -827,7 +821,7 @@ namespace CookBook.recipes
                     //TODO: Log error
                     if (ex.GetType() == typeof(MySqlException))
                     {
-                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                        logger.WriteLog("Coulnd't establish SQL Connection: " + ex, LoggerType.Error);
                     }
                 }
             }
@@ -875,7 +869,7 @@ namespace CookBook.recipes
                     //TODO: Log error
                     if (ex.GetType() == typeof(MySqlException))
                     {
-                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                        logger.WriteLog("Coulnd't establish SQL Connection: " + ex, LoggerType.Error);
                     }
                 }
             }
@@ -926,7 +920,7 @@ namespace CookBook.recipes
                     //TODO: Log error
                     if (ex.GetType() == typeof(MySqlException))
                     {
-                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                        logger.WriteLog("Coulnd't establish SQL Connection: " + ex, LoggerType.Error);
                     }
                 }
             }
@@ -973,7 +967,7 @@ namespace CookBook.recipes
                     //TODO: Log error
                     if (ex.GetType() == typeof(MySqlException))
                     {
-                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                        logger.WriteLog("Coulnd't establish SQL Connection: " + ex, LoggerType.Error);
                     }
                 }
             }
@@ -1021,10 +1015,9 @@ namespace CookBook.recipes
                 }
                 catch (Exception ex)
                 {
-                    //TODO: Log error
                     if (ex.GetType() == typeof(MySqlException))
                     {
-                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                        logger.WriteLog("Coulnd't establish SQL Connection: " + ex, LoggerType.Error);
                     }
                 }
             }
@@ -1065,10 +1058,9 @@ namespace CookBook.recipes
                 }
                 catch (Exception ex)
                 {
-                    //TODO: Log error
                     if (ex.GetType() == typeof(MySqlException))
                     {
-                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                        logger.WriteLog("Coulnd't establish SQL Connection: " + ex, LoggerType.Error);
                     }
                 }
             }
@@ -1115,10 +1107,9 @@ namespace CookBook.recipes
                 }
                 catch (Exception ex)
                 {
-                    //TODO: Log error
                     if (ex.GetType() == typeof(MySqlException))
                     {
-                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                        logger.WriteLog("Coulnd't establish SQL Connection: " + ex, LoggerType.Error);
                     }
                 }
             }
@@ -1159,10 +1150,9 @@ namespace CookBook.recipes
                 }
                 catch (Exception ex)
                 {
-                    //TODO: Log error
                     if (ex.GetType() == typeof(MySqlException))
                     {
-                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                        logger.WriteLog("Coulnd't establish SQL Connection: " + ex, LoggerType.Error);
                     }
                 }
             }
@@ -1198,22 +1188,14 @@ namespace CookBook.recipes
                     MySqlDataReader reader = command.ExecuteReader();
                     if(reader.Read() && reader[0] != DBNull.Value)
                     {
-                        try
-                        {
-                            id = Int32.Parse(reader.GetString(0));
-                        }
-                        catch (FormatException ex)
-                        {
-                            //TODO: LOG ERROR
-                        }
+                        id = DBUtils.AsInteger(reader.GetString(0));
                     } 
                 }
                 catch (Exception ex)
                 {
-                    //TODO: Log error
                     if (ex.GetType() == typeof(MySqlException))
                     {
-                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                        logger.WriteLog("Coulnd't establish SQL Connection: " + ex, LoggerType.Error);
                     }
                 }
             }
@@ -1249,10 +1231,9 @@ namespace CookBook.recipes
                 }
                 catch (Exception ex)
                 {
-                    //TODO: Log error
                     if (ex.GetType() == typeof(MySqlException))
                     {
-                        Debug.Print("Coulnd't establish SQL Connection: " + ex);
+                        logger.WriteLog("Coulnd't establish SQL Connection: " + ex, LoggerType.Error);
                     }
                 }
             }

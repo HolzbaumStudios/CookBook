@@ -1,4 +1,5 @@
 ﻿using CookBook.Recipes;
+using CookBook.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,9 @@ namespace CookBook.recipes
 
     public class Step
     {
+        private static readonly String LOGGER_TAG = "CookBook.recipes.Step";
+        private CookBookLogger logger = new CookBookLogger(LOGGER_TAG);
+
         public int Id { get; set; }
         public string Description { get; set; }
         public int Timer { get; private set; }
@@ -54,7 +58,7 @@ namespace CookBook.recipes
             }
             catch (NullReferenceException ex)
             {
-                //LOG this exception;
+                logger.WriteLog("Coulnd't establish SQL Connection: " + ex, LoggerType.Error);
             }
         }
 
