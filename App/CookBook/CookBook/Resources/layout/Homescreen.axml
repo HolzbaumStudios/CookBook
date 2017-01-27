@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:p1="http://schemas.android.com/apk/res/android"
+    p1:layout_width="match_parent"
+    p1:layout_height="match_parent"
+    p1:id="@+id/relativeLayout1">
+    <ImageButton
+        p1:src="@drawable/recipes"
+        p1:layout_width="wrap_content"
+        p1:layout_height="wrap_content"
+        p1:id="@+id/imageButtonRecipes"
+        p1:layout_alignParentLeft="true"
+        p1:layout_margin="35pt"
+        p1:minHeight="80pt"
+        p1:minWidth="80pt" />
+    <ImageButton
+        p1:src="@drawable/icon"
+        p1:layout_width="wrap_content"
+        p1:layout_height="wrap_content"
+        p1:id="@+id/imageButtonFavorites"
+        p1:layout_alignParentRight="true"
+        p1:layout_margin="35pt"
+        p1:minHeight="80pt"
+        p1:minWidth="80pt" />
+    <ImageButton
+        p1:src="@drawable/recipes"
+        p1:layout_width="wrap_content"
+        p1:layout_height="wrap_content"
+        p1:id="@+id/imageButtonNewRecipe"
+        p1:layout_alignParentLeft="true"
+        p1:layout_below="@id/imageButtonRecipes"
+        p1:layout_marginLeft="35pt"
+        p1:layout_marginRight="35pt"
+        p1:layout_marginBottom="35pt"
+        p1:minHeight="80pt"
+        p1:minWidth="80pt" />
+    <ImageButton
+        p1:src="@drawable/icon"
+        p1:layout_width="wrap_content"
+        p1:layout_height="wrap_content"
+        p1:id="@+id/imageButtonRandom"
+        p1:layout_alignParentRight="true"
+        p1:layout_below="@id/imageButtonFavorites"
+        p1:layout_marginLeft="35pt"
+        p1:layout_marginRight="35pt"
+        p1:layout_marginBottom="35pt"
+        p1:minHeight="80pt"
+        p1:minWidth="80pt" />
+    <ImageButton
+        p1:src="@drawable/recipes"
+        p1:layout_width="wrap_content"
+        p1:layout_height="wrap_content"
+        p1:id="@+id/imageTBD"
+        p1:layout_alignParentLeft="true"
+        p1:layout_below="@id/imageButtonNewRecipe"
+        p1:layout_marginLeft="35pt"
+        p1:layout_marginRight="35pt"
+        p1:layout_marginBottom="35pt"
+        p1:minHeight="80pt"
+        p1:minWidth="80pt" />
+    <ImageButton
+        p1:src="@drawable/icon"
+        p1:layout_width="wrap_content"
+        p1:layout_height="wrap_content"
+        p1:id="@+id/imageButtonCredits"
+        p1:layout_alignParentRight="true"
+        p1:layout_below="@id/imageButtonRandom"
+        p1:layout_marginLeft="35pt"
+        p1:layout_marginRight="35pt"
+        p1:layout_marginBottom="35pt"
+        p1:minHeight="80pt"
+        p1:minWidth="80pt" />
+</RelativeLayout>

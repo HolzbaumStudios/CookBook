@@ -8,7 +8,7 @@ using Android.Views;
 
 namespace CookBook
 {
-    [Activity(Label = "CookBook", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "CookBook", MainLauncher = false, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
         protected override void OnCreate(Bundle bundle)
@@ -16,7 +16,7 @@ namespace CookBook
             base.OnCreate(bundle);
 
             // Set our view from the "main" layout resource
-            SetContentView(Resource.Layout.Main);
+            SetContentView(Resource.Layout.Testscreen);
 
             Button clickEvent = FindViewById<Button>(Resource.Id.clickEvent);
             Button enableButton = FindViewById<Button>(Resource.Id.CallButton);
