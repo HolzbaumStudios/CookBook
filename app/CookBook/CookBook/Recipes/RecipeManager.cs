@@ -747,7 +747,7 @@ namespace CookBook.recipes
         /// <returns></returns>
         private List<Recipe> SelectRecipesByName(String name)
         {
-            List<Recipe> recipes = null;
+            List<Recipe> recipes = new List<Recipe>();
             using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
             {
                 try
@@ -793,7 +793,7 @@ namespace CookBook.recipes
 
         private List<Recipe> SelectRecipesAll()
         {
-            List<Recipe> recipes = null;
+            List<Recipe> recipes = new List<Recipe>();
             using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
             {
                 try
