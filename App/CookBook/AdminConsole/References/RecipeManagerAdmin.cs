@@ -13,7 +13,7 @@ using CookBook.Recipes;
 
 namespace CookBook.recipes
 {
-    public class RecipeManager
+    public class RecipeManagerAdmin
     {
         public static Recipe activeRecipeInstance;
 
@@ -747,7 +747,7 @@ namespace CookBook.recipes
         /// <returns></returns>
         private List<Recipe> SelectRecipesByName(String name)
         {
-            List<Recipe> recipes = new List<Recipe>();
+            List<Recipe> recipes = null;
             using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
             {
                 try
@@ -793,7 +793,7 @@ namespace CookBook.recipes
 
         private List<Recipe> SelectRecipesAll()
         {
-            List<Recipe> recipes = new List<Recipe>();
+            List<Recipe> recipes = null;
             using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
             {
                 try

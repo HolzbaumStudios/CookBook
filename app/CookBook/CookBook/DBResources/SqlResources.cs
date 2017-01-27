@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CookBook.resources
 {
-    static class SqlResources
+    public static class SqlResources
     {
         #region Recipes
         public static readonly String RECIPES_INSERT_RETURN = "INSERT INTO RECIPES (recipes_name, recipes_description, recipes_creator, fk_image) "
