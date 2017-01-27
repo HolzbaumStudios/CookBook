@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollViewSteps">
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/tableLayoutSteps">
+            <TableRow
+                android:id="@+id/tableRowSteps1"
+                android:weightSum="100">
+                <TextView
+                    android:id="@+id/textViewStepsDescription"
+                    android:text="Description"
+                    android:layout_weight="66"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageButton
+                    android:id="@+id/buttonStepsTimer"
+                    android:src="@drawable/timer"
+                    android:layout_weight="34"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </TableRow>
+            <TableRow
+                android:id="@+id/tableRowSteps2">
+                <TextView
+                    android:id="@+id/textViewIngredients"
+                    android:text="Ingredients"
+                    android:textSize="30sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </TableRow>
+            <TableRow
+                android:id="@+id/tableRowSteps3">
+                <TextView
+                    android:id="@+id/textViewStepsSteps"
+                    android:text="Ingredient"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+</LinearLayout>

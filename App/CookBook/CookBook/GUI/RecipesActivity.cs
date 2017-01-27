@@ -26,13 +26,10 @@ namespace CookBook
 
             // Instanzieren
             SetContentView(Resource.Layout.Recipes);
-            myListView = FindViewById<ListView>(Resource.Id.listView1);
+            myListView = FindViewById<ListView>(Resource.Id.listViewRecipes);
 
             RecipeManager recipeManager = new RecipeManager();
             myRecipeList = recipeManager.GetListOfAllRecipes();
-
-            Console.WriteLine(myRecipeList[0].Creator);
-            Console.WriteLine("Ichzähle so viel:" + myRecipeList.Count());
 
             // ArrayAdapter (Context context,int txtviewresource ID) Klasse um die Liste im gewünschten Format darzustellen
             // this steht hier für die Activity welche eine Subklasse von Context darstellt, daher ist das kein Problem)

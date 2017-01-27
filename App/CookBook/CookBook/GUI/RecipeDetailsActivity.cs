@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using CookBook.recipes;
+using CookBook.GUI;
 
 namespace CookBook
 {
@@ -35,8 +36,14 @@ namespace CookBook
             textViewRecipeDetailsTitle.Text = recipe.Name;
             textViewRecipeDetailsAuthor.Text = recipe.Creator;
             textViewRecipeDetailsDescription.Text = recipe.Description;
-            
 
+            Button buttonRecipeDetailsPrepare = FindViewById<Button>(Resource.Id.buttonRecipeDetailsPrepare);
+            buttonRecipeDetailsPrepare.Click += (object sender, EventArgs e) =>
+            {
+                var myIntent = new Intent(this, typeof(StepsActivity));
+                myIntent.PutExtra("RecipeId", recipeId);
+                StartActivityForResult(myIntent, 0);
+            };
         }
     }
 }

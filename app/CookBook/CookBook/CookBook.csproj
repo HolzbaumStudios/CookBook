@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="DBResources\SqlResources.cs" />
     <Compile Include="GUI\HomescreenActivity.cs" />
+    <Compile Include="GUI\StepsActivity.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="GUI\RecipeDetailsActivity.cs" />
     <Compile Include="GUI\RecipesActivity.cs" />
@@ -69,6 +70,8 @@
     <Compile Include="GUI\RecipeTest.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="GUI\StepsAdapter.cs" />
+    <Compile Include="Utils\CookBookLogger.cs" />
     <Compile Include="Utils\DBUtils.cs" />
     <Compile Include="Utils\PathUtils.cs" />
     <Compile Include="WebResources\FileUploader.cs" />
@@ -79,10 +82,20 @@
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <AndroidResource Include="Resources\layout\Homescreen.axml" />
-    <AndroidResource Include="Resources\layout\RecipeDetails.axml" />
+    <AndroidResource Include="Resources\layout\RecipeDetails.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
     <AndroidResource Include="Resources\layout\Recipes.axml" />
-    <AndroidResource Include="Resources\layout\RecipesListItems" />
+    <AndroidResource Include="Resources\layout\RecipesListItems">
+      <SubType>Designer</SubType>
+    </AndroidResource>
     <AndroidResource Include="Resources\layout\Testscreen.axml" />
+    <AndroidResource Include="Resources\layout\StepsListItems.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Steps.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />
@@ -110,6 +123,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\recipes.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\timer.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
