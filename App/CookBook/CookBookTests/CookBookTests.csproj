@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CookBook, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CookBook\obj\Debug\CookBook.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -54,12 +58,6 @@
     <Compile Include="Recipes\ListIngredientTests.cs" />
     <Compile Include="Recipes\StepTests.cs" />
     <Compile Include="Utils\PathUtilsTests.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CookBook\CookBook.csproj">
-      <Project>{BEBA0595-1E19-485E-BA07-56892EDB1316}</Project>
-      <Name>CookBook</Name>
-    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
