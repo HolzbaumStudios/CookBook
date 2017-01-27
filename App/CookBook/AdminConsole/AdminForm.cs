@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using CookBook.recipes;
 using CookBook.Recipes;
+using AdminConsole;
 
 namespace AdminConsole
 {
@@ -52,8 +53,9 @@ namespace AdminConsole
                     recipe.AddStep(newStep);
                 }
             }
-            var rm = new RecipeManager();
+            var rm = new RecipeManagerAdmin();
             rm.StoreRecipe(recipe);
+            MessageBox.Show("Recipe saved!");
         }
 
         private TimeUnits GetTimeUnit(String timeUnitString)

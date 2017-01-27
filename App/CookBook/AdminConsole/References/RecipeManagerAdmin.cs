@@ -13,7 +13,7 @@ using CookBook.Recipes;
 
 namespace CookBook.recipes
 {
-    public class RecipeManager
+    public class RecipeManagerAdmin
     {
         public static Recipe activeRecipeInstance;
 
@@ -747,7 +747,7 @@ namespace CookBook.recipes
         /// <returns></returns>
         private List<Recipe> SelectRecipesByName(String name)
         {
-            List<Recipe> recipes = new List<Recipe>();
+            List<Recipe> recipes = null;
             using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
             {
                 try
@@ -771,7 +771,6 @@ namespace CookBook.recipes
                     while (reader.Read() && reader[iterator] != DBNull.Value)
                     {
                         Recipe recipe = new Recipe();
-                        recipe.Id = DBUtils.AsInteger(reader["id_recipes"]);
                         recipe.Name = DBUtils.AsString(reader["recipes_name"]);
                         recipe.Description = DBUtils.AsString(reader["recipes_description"]);
                         recipe.Creator = DBUtils.AsString(reader["recipes_creator"]);
@@ -794,7 +793,7 @@ namespace CookBook.recipes
 
         private List<Recipe> SelectRecipesAll()
         {
-            List<Recipe> recipes = new List<Recipe>();
+            List<Recipe> recipes = null;
             using (MySqlConnection connection = new MySqlConnection(DBUtils.GetConnectionString()))
             {
                 try
@@ -813,7 +812,6 @@ namespace CookBook.recipes
                     while (reader.Read() && reader[iterator] != DBNull.Value)
                     {
                         Recipe recipe = new Recipe();
-                        recipe.Id = DBUtils.AsInteger(reader["id_recipes"]);
                         recipe.Name = DBUtils.AsString(reader["recipes_name"]);
                         recipe.Description = DBUtils.AsString(reader["recipes_description"]);
                         recipe.Creator = DBUtils.AsString(reader["recipes_creator"]);

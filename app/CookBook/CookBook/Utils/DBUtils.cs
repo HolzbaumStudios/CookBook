@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CookBook.utils
 {
-    static class DBUtils
+    public static class DBUtils
     {
         public static String GetConnectionString()
         {
