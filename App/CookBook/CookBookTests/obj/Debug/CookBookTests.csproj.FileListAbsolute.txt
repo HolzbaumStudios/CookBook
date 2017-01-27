@@ -1,0 +1,9 @@
+C:\Users\fblanco\Documents\GitHub\CookBook\App\CookBook\CookBookTests\bin\Debug\CookBookTests.dll
+C:\Users\fblanco\Documents\GitHub\CookBook\App\CookBook\CookBookTests\bin\Debug\CookBookTests.pdb
+C:\Users\fblanco\Documents\GitHub\CookBook\App\CookBook\CookBookTests\bin\Debug\CookBook.dll
+C:\Users\fblanco\Documents\GitHub\CookBook\App\CookBook\CookBookTests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\fblanco\Documents\GitHub\CookBook\App\CookBook\CookBookTests\bin\Debug\MySql.Data.CF.dll
+C:\Users\fblanco\Documents\GitHub\CookBook\App\CookBook\CookBookTests\bin\Debug\CookBook.pdb
+C:\Users\fblanco\Documents\GitHub\CookBook\App\CookBook\CookBookTests\obj\Debug\CookBookTests.csprojResolveAssemblyReference.cache
+C:\Users\fblanco\Documents\GitHub\CookBook\App\CookBook\CookBookTests\obj\Debug\CookBookTests.dll
+C:\Users\fblanco\Documents\GitHub\CookBook\App\CookBook\CookBookTests\obj\Debug\CookBookTests.pdb
