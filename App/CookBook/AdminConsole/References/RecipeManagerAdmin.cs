@@ -10,6 +10,7 @@ using System.Data;
 using System.Diagnostics;
 using MySql.Data.MySqlClient;
 using CookBook.Recipes;
+using CookBook.WebResources;
 
 namespace CookBook.Recipes
 {
@@ -39,9 +40,9 @@ namespace CookBook.Recipes
             }
 
             //Save recipe (starting by the recipe image) and get recipe id
-            if(recipe.ImageId == 0 && recipe.ImagePath != null)
+            if(recipe.ImageId == 0 && recipe.ImagePath != null && recipe.ImagePath != String.Empty)
             {
-                recipe.ImageId = SaveImage(); //Might need to change logic
+                recipe.ImageId = SaveImage(recipe.ImagePath); //Might need to change logic
             }
 
             int recipeId;
@@ -189,11 +190,26 @@ namespace CookBook.Recipes
             return updatedStep;
         }
 
-        private int SaveImage()
+        private int SaveImage(String imagePath)
         {
-            string path = "";
-            //string path = StoreImage();
+            //string path = "";
+            string path = StoreImage(imagePath);
             return CreateImageEntry(path);
+        }
+
+        private String StoreImage(String imagePath)
+        {
+            String webImagePath = String.Empty;
+            /*var imageUploader = new ImageUploader();
+            imageUploader.InitializeClient();
+            imageUploader.UploadFile(imagePath);*/
+
+            var uploader = new FtpUploader();
+            uploader.InitializeClient();
+            uploader.UploadFile(imagePath);
+            uploader.LogResult();
+            uploader.Dispose();
+            return webImagePath;
         }
 
         private String GetImage(int imageId)
