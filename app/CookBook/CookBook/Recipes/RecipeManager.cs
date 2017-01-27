@@ -13,7 +13,7 @@ using CookBook.Recipes;
 
 namespace CookBook.recipes
 {
-    class RecipeManager
+    public class RecipeManager
     {
         public static Recipe activeRecipeInstance;
 
