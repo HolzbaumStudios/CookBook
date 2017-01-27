@@ -56,12 +56,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DBResources\SqlResources.cs" />
+    <Compile Include="GUI\HomescreenActivity.cs" />
     <Compile Include="MainActivity.cs" />
+    <Compile Include="GUI\RecipeDetailsActivity.cs" />
+    <Compile Include="GUI\RecipesActivity.cs" />
+    <Compile Include="GUI\RecipesAdapter.cs" />
     <Compile Include="Recipes\Ingredient.cs" />
     <Compile Include="Recipes\Recipe.cs" />
     <Compile Include="Recipes\RecipeManager.cs" />
     <Compile Include="Recipes\ShoppingList.cs" />
     <Compile Include="Recipes\Step.cs" />
+    <Compile Include="GUI\RecipeTest.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\DBUtils.cs" />
@@ -73,11 +78,11 @@
     <None Include="GettingStarted.Xamarin" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\Main.axml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Homescreen.axml" />
+    <AndroidResource Include="Resources\layout\RecipeDetails.axml" />
+    <AndroidResource Include="Resources\layout\Recipes.axml" />
+    <AndroidResource Include="Resources\layout\RecipesListItems" />
+    <AndroidResource Include="Resources\layout\Testscreen.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />
@@ -88,7 +93,9 @@
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\recipes.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
      Other similar extension points exist, see Microsoft.Common.targets.
