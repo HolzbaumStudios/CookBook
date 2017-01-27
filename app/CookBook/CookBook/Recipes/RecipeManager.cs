@@ -771,6 +771,7 @@ namespace CookBook.recipes
                     while (reader.Read() && reader[iterator] != DBNull.Value)
                     {
                         Recipe recipe = new Recipe();
+                        recipe.Id = DBUtils.AsInteger(reader["id_recipes"]);
                         recipe.Name = DBUtils.AsString(reader["recipes_name"]);
                         recipe.Description = DBUtils.AsString(reader["recipes_description"]);
                         recipe.Creator = DBUtils.AsString(reader["recipes_creator"]);
@@ -812,6 +813,7 @@ namespace CookBook.recipes
                     while (reader.Read() && reader[iterator] != DBNull.Value)
                     {
                         Recipe recipe = new Recipe();
+                        recipe.Id = DBUtils.AsInteger(reader["id_recipes"]);
                         recipe.Name = DBUtils.AsString(reader["recipes_name"]);
                         recipe.Description = DBUtils.AsString(reader["recipes_description"]);
                         recipe.Creator = DBUtils.AsString(reader["recipes_creator"]);
