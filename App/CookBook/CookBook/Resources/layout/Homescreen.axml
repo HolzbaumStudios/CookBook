@@ -13,7 +13,7 @@
         p1:minHeight="80pt"
         p1:minWidth="80pt" />
     <ImageButton
-        p1:src="@drawable/icon"
+        p1:src="@drawable/favorites"
         p1:layout_width="wrap_content"
         p1:layout_height="wrap_content"
         p1:id="@+id/imageButtonFavorites"
@@ -22,7 +22,7 @@
         p1:minHeight="80pt"
         p1:minWidth="80pt" />
     <ImageButton
-        p1:src="@drawable/recipes"
+        p1:src="@drawable/addbutton"
         p1:layout_width="wrap_content"
         p1:layout_height="wrap_content"
         p1:id="@+id/imageButtonNewRecipe"
@@ -34,7 +34,7 @@
         p1:minHeight="80pt"
         p1:minWidth="80pt" />
     <ImageButton
-        p1:src="@drawable/icon"
+        p1:src="@drawable/dicebutton"
         p1:layout_width="wrap_content"
         p1:layout_height="wrap_content"
         p1:id="@+id/imageButtonRandom"
@@ -46,7 +46,7 @@
         p1:minHeight="80pt"
         p1:minWidth="80pt" />
     <ImageButton
-        p1:src="@drawable/recipes"
+        p1:src="@drawable/configbutton"
         p1:layout_width="wrap_content"
         p1:layout_height="wrap_content"
         p1:id="@+id/imageTBD"
@@ -58,7 +58,7 @@
         p1:minHeight="80pt"
         p1:minWidth="80pt" />
     <ImageButton
-        p1:src="@drawable/icon"
+        p1:src="@drawable/infobutton"
         p1:layout_width="wrap_content"
         p1:layout_height="wrap_content"
         p1:id="@+id/imageButtonCredits"
