@@ -15,18 +15,25 @@ namespace CookBook.Utils
 {
     class CookBookLogger
     {
+        String tag;
+
+        public CookBookLogger(String tag)
+        {
+            this.tag = tag;
+        }
+
         /// <summary>
         /// Defines which logger should be used, depending on the configuration mode.
         /// </summary>
         /// <param name="tag">The tag.</param>
         /// <param name="message">The message.</param>
         /// <param name="type">The type.</param>
-        public void WriteLog(String tag, String message, LoggerType type)
+        public void WriteLog(String message, LoggerType type)
         {
 #if DEBUG
-            LogOnWindowsConsole(tag, message, type);
+            LogOnWindowsConsole(message, type);
 #else
-            LogOnAndroid(tag, message, type);
+            LogOnAndroid(message, type);
 #endif
         }
 
@@ -36,7 +43,7 @@ namespace CookBook.Utils
         /// <param name="tag">The tag.</param>
         /// <param name="message">The message.</param>
         /// <param name="type">The type.</param>
-        private void LogOnAndroid(String tag, String message, LoggerType type)
+        private void LogOnAndroid(String message, LoggerType type)
         {
             switch(type)
             {
@@ -58,7 +65,7 @@ namespace CookBook.Utils
         /// <param name="tag">The tag.</param>
         /// <param name="message">The message.</param>
         /// <param name="type">The type.</param>
-        private void LogOnWindowsConsole(String tag, String message, LoggerType type)
+        private void LogOnWindowsConsole(String message, LoggerType type)
         {
             Console.WriteLine("{0}: {1}, {2}", type.ToString().ToUpper(), message, tag);
         }

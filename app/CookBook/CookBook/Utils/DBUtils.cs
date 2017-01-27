@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CookBook.Utils;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -9,6 +10,9 @@ namespace CookBook.utils
 {
     public static class DBUtils
     {
+        private static readonly String LOGGER_TAG = "CookBook.utils.DBUtils";
+        private static CookBookLogger logger = new CookBookLogger(LOGGER_TAG);
+
         public static String GetConnectionString()
         {
             //TODO - SECURE Connection
@@ -75,15 +79,15 @@ namespace CookBook.utils
         {
             if (ex.GetType() == typeof(ArgumentNullException))
             {
-                Debug.Print("The provided value is null: " + ex);
+               logger.WriteLog("The provided value is null: " + ex, LoggerType.Error);
             }
             else if (ex.GetType() == typeof(FormatException))
             {
-                Debug.Print("Error while converting values: " + ex);
+                logger.WriteLog("Error while converting values: " + ex, LoggerType.Error);
             }
             else if (ex.GetType() == typeof(OverflowException))
             {
-                Debug.Print("Overflow exception while converting.");
+                logger.WriteLog("Overflow exception while converting:" + ex, LoggerType.Error);
             }
         }
     }
