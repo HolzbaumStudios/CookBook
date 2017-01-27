@@ -37,9 +37,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\CookBook\obj\Debug\CookBook.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\MySQL\Connector.NET 6.9\Assemblies\v4.5\MySql.Data.dll</HintPath>
+    <Reference Include="MySql.Data">
+      <HintPath>..\..\..\..\..\..\OneDrive\HolzbaumProductions\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
