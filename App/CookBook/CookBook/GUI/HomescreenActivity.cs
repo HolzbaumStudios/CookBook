@@ -25,8 +25,6 @@ namespace CookBook
                 {
                     var myIntent = new Intent(this, typeof(RecipesActivity));
                     StartActivityForResult(myIntent, 0);
-                    //SetContentView(Resource.Layout.Recipes);
-
                 };
         }
     }

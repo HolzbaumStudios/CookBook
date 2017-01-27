@@ -9,6 +9,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using CookBook.recipes;
 
 namespace CookBook
 {
@@ -16,8 +17,8 @@ namespace CookBook
     public class RecipesActivity : Activity
     {
         // Variablen deklarieren
-        private List<RecipeTest> myTestList;
         private ListView myListView;
+        private List<Recipe> myRecipeList;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -27,19 +28,15 @@ namespace CookBook
             SetContentView(Resource.Layout.Recipes);
             myListView = FindViewById<ListView>(Resource.Id.listView1);
 
-            myTestList = new List<RecipeTest>();
-            myTestList.Add(new RecipeTest() { RecipeName = "Risotto", RecipeID = 1, Description = "Isch wüki fein", Creator = "Roman" });
-            myTestList.Add(new RecipeTest() { RecipeName = "Pizza", RecipeID = 2, Description = "Isch au guet", Creator = "Pirata" });
-            myTestList.Add(new RecipeTest() { RecipeName = "Tiramisu", RecipeID = 3, Description = "Schuldet mir de Pedro", Creator = "Pedro" });
-            myTestList.Add(new RecipeTest() { RecipeName = "Pasta con BroWi", RecipeID = 4, Description = "Eigekreation", Creator = "Roman" });
-            myTestList.Add(new RecipeTest() { RecipeName = "Salat", RecipeID = 5, Description = "Wänns muess sii", Creator = "Pedro" });
-            myTestList.Add(new RecipeTest() { RecipeName = "Tomate", RecipeID = 6, Description = "Zum pflücke", Creator = "Nöd für de Pedro" });
-            myTestList.Add(new RecipeTest() { RecipeName = "Gurke mit Spaghetti", RecipeID = 7, Description = "Isst kein Mänsch", Creator = "Roman" });
+            RecipeManager recipeManager = new RecipeManager();
+            myRecipeList = recipeManager.GetListOfAllRecipes();
+
+            Console.WriteLine(myRecipeList[0].Creator);
+            Console.WriteLine("Ichzähle so viel:" + myRecipeList.Count());
 
             // ArrayAdapter (Context context,int txtviewresource ID) Klasse um die Liste im gewünschten Format darzustellen
             // this steht hier für die Activity welche eine Subklasse von Context darstellt, daher ist das kein Problem)
-            //ArrayAdapter<string> adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, myTestList);
-            RecipesAdapter adapter = new RecipesAdapter(this, myTestList);
+            RecipesAdapter adapter = new RecipesAdapter(this, myRecipeList);
 
             myListView.Adapter = adapter;
 
@@ -49,9 +46,8 @@ namespace CookBook
         // Clickevent handler
         private void MyListView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
-            Console.WriteLine(myTestList[e.Position].Description);
-            var myIntent = new Intent(this, typeof(RecipeDetailsActivity));
-            myIntent.PutExtra("RecipeCreator", myTestList[e.Position].Creator);
+            Intent myIntent = new Intent(this, typeof(RecipeDetailsActivity));
+            myIntent.PutExtra("RecipeId", myRecipeList[e.Position].Id);
             StartActivityForResult(myIntent, 0);
         }
 

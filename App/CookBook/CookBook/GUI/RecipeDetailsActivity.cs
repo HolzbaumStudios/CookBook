@@ -9,6 +9,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using CookBook.recipes;
 
 namespace CookBook
 {
@@ -22,10 +23,19 @@ namespace CookBook
             SetContentView(Resource.Layout.RecipeDetails);
             ImageButton btnRecipes = FindViewById<ImageButton>(Resource.Id.imageButtonRecipes);
             TextView textViewRecipeDetailsAuthor = FindViewById<TextView>(Resource.Id.textViewRecipeDetailsAuthor);
+            TextView textViewRecipeDetailsTitle = FindViewById<TextView>(Resource.Id.textViewRecipeDetailsTitle);
+            TextView textViewRecipeDetailsDescription = FindViewById<TextView>(Resource.Id.textViewRecipeDetailsDescription);
+            Recipe recipe;
 
-            string s = Intent.GetStringExtra("RecipeCreator");
-            Console.WriteLine(s);
-            textViewRecipeDetailsAuthor.Text = s;
+            int recipeId = Intent.GetIntExtra("RecipeId", 0);
+
+            RecipeManager recipeManager = new RecipeManager();
+            recipe = recipeManager.SelectRecipe(recipeId);
+
+            textViewRecipeDetailsTitle.Text = recipe.Name;
+            textViewRecipeDetailsAuthor.Text = recipe.Creator;
+            textViewRecipeDetailsDescription.Text = recipe.Description;
+            
 
         }
     }
