@@ -45,6 +45,9 @@
   <ItemGroup>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
+    <Reference Include="MySql.Data.CF">
+      <HintPath>Assets\MySql.Data.CF.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -54,8 +57,10 @@
   <ItemGroup>
     <Compile Include="DBResources\SqlResources.cs" />
     <Compile Include="MainActivity.cs" />
+    <Compile Include="Recipes\Ingredient.cs" />
     <Compile Include="Recipes\Recipe.cs" />
     <Compile Include="Recipes\RecipeManager.cs" />
+    <Compile Include="Recipes\ShoppingList.cs" />
     <Compile Include="Recipes\Step.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

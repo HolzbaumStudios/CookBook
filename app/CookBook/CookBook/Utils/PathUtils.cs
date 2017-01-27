@@ -6,13 +6,24 @@ using System.Threading.Tasks;
 
 namespace CookBook.utils
 {
-    class PathUtils
+    public class PathUtils
     {
-        private static String FILEPATH = "/";
+        private static String ROOTPATH = "/";
+        private static String SEPARATOR_CHAR = "/";
 
-        public static String mergedPath(String fileName)
+        public static String MergePath(String path, String fileName)
         {
-            return FILEPATH + "/" + fileName;
+            String separator;
+            if(path.EndsWith("/"))
+            {
+                separator = String.Empty;
+            }
+            else
+            {
+                separator = SEPARATOR_CHAR; 
+            }
+            return path + separator + fileName;
         }
     }
+
 }
