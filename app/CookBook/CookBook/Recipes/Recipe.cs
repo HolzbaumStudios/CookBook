@@ -4,43 +4,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CookBook.recipes
+namespace CookBook.Recipes
 {
-    class Recipe
+    public class Recipe
     {
-        private int id;
-        private string name;
-        private string description;
-        private string creator;
-        private string imagePath;
-        private List<String> tags;
-        private List<Step> steps;
-
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Creator { get; set; }
         public string ImagePath { get; set; }
-        public List<Step> Steps { get; set; }
+        public int ImageId { get; set; }
+        public List<Step> Steps { get; private set; }
+        public List<String> Tags { get; private set; }
 
         /// <summary>
         /// Constructor for en empty recipe
         /// </summary>
         public Recipe()
         {
-            id = 0;
-            steps = new List<Step>();
-            tags = new List<String>();
+            Id = 0;
+            Steps = new List<Step>();
+            Tags = new List<String>();
+        }
+
+        public void AddStep(Step step)
+        {
+            Steps.Add(step);
+        }
+
+        public void RemoveStep(Step step)
+        {
+            Steps.Remove(step);
         }
 
         public void AddTag(String tag)
         {
-            tags.Add(tag);
+            Tags.Add(tag);
         }
 
         public void RemoveTag(String tag)
         {
-            tags.Remove(tag);
+            Tags.Remove(tag);
         }
     }
 }   
