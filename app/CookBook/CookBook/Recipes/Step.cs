@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CookBook.recipes
+namespace CookBook.Recipes
 {
     public enum TimeUnits { Seconds, Minutes, Hours };
 

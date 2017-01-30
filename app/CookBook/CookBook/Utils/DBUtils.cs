@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CookBook.utils
+namespace CookBook.Utils
 {
     public static class DBUtils
     {

@@ -1,4 +1,4 @@
-﻿using CookBook.utils;
+﻿using CookBook.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +10,9 @@ using System.Data;
 using System.Diagnostics;
 using MySql.Data.MySqlClient;
 using CookBook.Recipes;
-using CookBook.Utils;
 
-namespace CookBook.recipes
+
+namespace CookBook.Recipes
 {
     public class RecipeManager
     {

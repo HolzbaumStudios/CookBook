@@ -9,7 +9,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using CookBook.recipes;
+using CookBook.Recipes;
 
 namespace CookBook
 {

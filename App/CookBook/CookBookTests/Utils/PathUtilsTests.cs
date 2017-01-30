@@ -1,12 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CookBook.utils;
+using CookBook.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CookBook.utils.Tests
+namespace CookBook.Utils.Tests
 {
     [TestClass()]
     public class PathUtilsTests
