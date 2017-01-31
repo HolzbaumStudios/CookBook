@@ -59,17 +59,15 @@ namespace CookBook.Recipes
             var stepIds = new List<int>();
             foreach(Step step in recipe.Steps)
             {
-                int stepId;
                 if(step.Id != 0)
                 {
-                    stepId = step.Id;
                     UpdateStepEntry(step, 0); //Add imageId
                 }
                 else
                 {
-                    stepId = CreateStepEntry(step);
+                    step.Id = CreateStepEntry(step);
                 }
-                stepIds.Add(stepId);
+                stepIds.Add(step.Id);
 
                 foreach (Ingredient ingredient in step.Ingredients)
                 {
