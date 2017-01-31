@@ -22,7 +22,16 @@
 /App/CookBook/CookBook/[Bb]in/
 /App/CookBook/CookBook/[Oo]bj/
 /App/CookBook/CookBook/[Ll]og/
-
+/App/CookBook/AdminConsole/[Dd]ebug/
+/App/CookBook/AdminConsole/[Dd]ebugPublic/
+/App/CookBook/AdminConsole/[Rr]elease/
+/App/CookBook/AdminConsole/[Rr]eleases/
+/App/CookBook/AdminConsole/x64/
+/App/CookBook/AdminConsole/x86/
+/App/CookBook/AdminConsole/bld/
+/App/CookBook/AdminConsole/[Bb]in/
+/App/CookBook/AdminConsole/[Oo]bj/
+/App/CookBook/AdminConsole/[Ll]og/
 
 *_i.c
 *_p.c
