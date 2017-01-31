@@ -18,6 +18,11 @@ namespace CookBook
         private Recipe myRecipe;
         private Context recipeContext;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="recipe"></param>
         public StepsAdapter(Context context, Recipe recipe)
         {
             myRecipe = recipe;
