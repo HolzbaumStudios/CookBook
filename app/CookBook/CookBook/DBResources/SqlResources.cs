@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace CookBook.resources
 {
+    /// <summary>
+    /// All sql queries are stored in this static class.
+    /// </summary>
     public static class SqlResources
     {
         #region Recipes

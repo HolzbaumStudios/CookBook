@@ -11,17 +11,22 @@ using Android.Views;
 using Android.Widget;
 using System.Net;
 using System.IO;
+using CookBook.Utils;
 
 namespace CookBook.WebResources
 {
+    /// <summary>
+    /// Uses FTP to upload files to a server. 
+    /// </summary>
     public class FtpUploader : FileUploader
     {
+        private static readonly String LOGGER_TAG = "CookBook.WebResources.FtpUploader";
+        private static CookBookLogger logger = new CookBookLogger(LOGGER_TAG);
         // Get the object used to communicate with the server.
         FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://www.blancos.ch/cookbook");
         FtpWebResponse response;
 
-
-
+        //Dispose FTP connection
         public void Dispose()
         {
             response.Close();
@@ -30,7 +35,7 @@ namespace CookBook.WebResources
         public void InitializeClient()
         {
             request.Method = WebRequestMethods.Ftp.UploadFile;
-            // This example assumes the FTP site uses anonymous logon.
+            // Credentials should normally be removed. The user is set up to have access only to this folder and can therefore be left in.
             request.Credentials = new NetworkCredential("cookbook@blancos.ch", "WokuDasEi");
             request.Headers.Add("Content-Type", "image/png");
             request.UseBinary = true;
@@ -40,7 +45,7 @@ namespace CookBook.WebResources
         {
             response = (FtpWebResponse)request.GetResponse();
 
-            Console.WriteLine("Upload File Complete, status {0}", response.StatusDescription);
+            logger.WriteLog(("Upload File Complete, status " + response.StatusDescription), LoggerType.Info);
         }
 
         public void UploadFile(string file)
@@ -53,11 +58,7 @@ namespace CookBook.WebResources
 
             Stream requestStream = request.GetRequestStream();
             requestStream.Write(fileContents, 0, fileContents.Length);
-            requestStream.Close();
-
-            
-
-            
+            requestStream.Close();  
         }
     }
 }

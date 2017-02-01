@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace CookBook.Utils
 {
+    /// <summary>
+    /// Contains helper methods used on DB connections.
+    /// </summary>
     public static class DBUtils
     {
         private static readonly String LOGGER_TAG = "CookBook.utils.DBUtils";

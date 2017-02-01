@@ -13,6 +13,9 @@ using Android.Util;
 
 namespace CookBook.Utils
 {
+    /// <summary>
+    /// A custom logger class, which handles all the logging events, considering Debug and Release verisons.
+    /// </summary>
     class CookBookLogger
     {
         String tag;

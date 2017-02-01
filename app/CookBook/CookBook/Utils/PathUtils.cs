@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace CookBook.Utils
 {
+    /// <summary>
+    /// Class would have been used to handle image storing. As of now, this class is not used, because of problems with the image upload.
+    /// </summary>
     public class PathUtils
     {
         private static String ROOTPATH = "/";

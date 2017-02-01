@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace CookBook.Recipes
 {
+    /// <summary>
+    /// The base class for all recipes containing all information the recipe needs.
+    /// </summary>
     public class Recipe
     {
         public int Id { get; set; }
@@ -27,21 +30,37 @@ namespace CookBook.Recipes
             Tags = new List<String>();
         }
 
+        /// <summary>
+        /// Adds an object of type Step to the recipe.
+        /// </summary>
+        /// <param name="step"></param>
         public void AddStep(Step step)
         {
             Steps.Add(step);
         }
 
+        /// <summary>
+        /// Removes an object of type Step from the recipe.
+        /// </summary>
+        /// <param name="step"></param>
         public void RemoveStep(Step step)
         {
             Steps.Remove(step);
         }
 
+        /// <summary>
+        /// Adds a tag as String to the recipe.
+        /// </summary>
+        /// <param name="tag"></param>
         public void AddTag(String tag)
         {
             Tags.Add(tag);
         }
 
+        /// <summary>
+        /// Removes a tag from the recipe.
+        /// </summary>
+        /// <param name="tag"></param>
         public void RemoveTag(String tag)
         {
             Tags.Remove(tag);

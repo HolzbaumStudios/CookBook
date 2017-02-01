@@ -12,6 +12,9 @@ using Android.Widget;
 
 namespace CookBook.Recipes
 {
+    /// <summary>
+    /// This class keeps all the ingredient information. The storing and loading is handled by the Recipe Manager.
+    /// </summary>
     public class Ingredient
     {
         public string Name { get; set; }

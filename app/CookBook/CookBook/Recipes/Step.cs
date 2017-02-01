@@ -10,6 +10,9 @@ namespace CookBook.Recipes
 {
     public enum TimeUnits { Seconds, Minutes, Hours };
 
+    /// <summary>
+    /// Stores all information relevant to the single steps like description, timer and ingredients.
+    /// </summary>
     public class Step
     {
         private static readonly String LOGGER_TAG = "CookBook.recipes.Step";
@@ -50,6 +53,10 @@ namespace CookBook.Recipes
             Timer = seconds;
         }
 
+        /// <summary>
+        /// Adds a new ingredient to the step.
+        /// </summary>
+        /// <param name="ingredient"></param>
         public void AddIngredient(Ingredient ingredient)
         {
             try
@@ -62,6 +69,10 @@ namespace CookBook.Recipes
             }
         }
 
+        /// <summary>
+        /// Remove an ingredient from the step.
+        /// </summary>
+        /// <param name="ingredient"></param>
         public void RemoveIngredient(Ingredient ingredient)
         {
             if (Ingredients.Contains(ingredient))

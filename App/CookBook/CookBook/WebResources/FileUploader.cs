@@ -12,6 +12,9 @@ using Android.Widget;
 
 namespace CookBook.WebResources
 {
+    /// <summary>
+    /// Interface for file uploading methods.
+    /// </summary>
     interface FileUploader
     {
         void InitializeClient();

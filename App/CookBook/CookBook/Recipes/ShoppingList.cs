@@ -12,6 +12,10 @@ using Android.Widget;
 
 namespace CookBook.Recipes
 {
+    /// <summary>
+    /// This class contains all necessary methods to generate a shopping list, based on the recipe.
+    /// NOTE: The shopping list is not present in the GUI yet!
+    /// </summary>
     class ShoppingList
     {
         private Dictionary<String, ListIngredient> shoppingListMap = new Dictionary<String, ListIngredient>();

@@ -14,6 +14,9 @@ using CookBook.Recipes;
 
 namespace CookBook.Recipes
 {
+    /// <summary>
+    /// This class is the core of the applications. It handles all connections to the database, to store and load recipes.
+    /// </summary>
     public class RecipeManager
     {
         private static readonly String LOGGER_TAG = "CookBook.Utils.RecipeManager";
@@ -32,18 +35,18 @@ namespace CookBook.Recipes
         public void StoreRecipe(Recipe recipe)
         {
             bool newEntry = recipe.Id == 0;
-            
+
             //Save tags and get tag ids
             var tagIds = new List<int>();
-            foreach(String tag in recipe.Tags)
+            foreach (String tag in recipe.Tags)
             {
                 tagIds.Add(CreateTagEntry(tag));
             }
 
             //Save recipe (starting by the recipe image) and get recipe id
-            if(recipe.ImageId == 0 && recipe.ImagePath != null)
+            if (recipe.ImageId == 0 && recipe.ImagePath != null)
             {
-                recipe.ImageId = SaveImage(); //Might need to change logic
+                recipe.ImageId = SaveImage(); //Implementation not finished
             }
 
             int recipeId;
@@ -58,10 +61,10 @@ namespace CookBook.Recipes
             }
             //Save steps and get ids
             var stepIds = new List<int>();
-            foreach(Step step in recipe.Steps)
+            foreach (Step step in recipe.Steps)
             {
                 int stepId;
-                if(step.Id != 0)
+                if (step.Id != 0)
                 {
                     stepId = step.Id;
                     UpdateStepEntry(step, 0); //Add imageId
@@ -92,11 +95,11 @@ namespace CookBook.Recipes
                         int id = 1;
                         UpdateStepsIngredientsEntry(id, step.Id, ingredient);
                     }
-                    
+
                 }
             }
 
-            
+
             if (newEntry) //TODO -> Check if value is already present (should only be the case, when steps are added afterwards)
             {
                 //Save steps - recipe
@@ -139,13 +142,13 @@ namespace CookBook.Recipes
         {
             //Get Recipe from the database
             Recipe recipe = SelectRecipeById(recipeId);
-            
+
             //Get all corresponding step ids
             List<int> stepIds = SelectStepIdsByRecipeId(recipeId);
             //Get all steps from the database
-            foreach(int stepId in stepIds)
+            foreach (int stepId in stepIds)
             {
-                recipe.AddStep(SelectStepByStepId(stepId));      
+                recipe.AddStep(SelectStepByStepId(stepId));
             }
             //Fill all step values
             for (int i = 0; i < recipe.Steps.Count; i++) //Can't use foreach, because overwriting the iterator in the loop is not possible
@@ -156,15 +159,15 @@ namespace CookBook.Recipes
             //Get all tag ids
             List<int> tagIds = SelectTagIdsByRecipeId(recipeId);
             //Get all tags from the database
-            foreach(int tagId in tagIds)
+            foreach (int tagId in tagIds)
             {
                 String tag = SelectTagByTagId(tagId);
-                if(!String.IsNullOrEmpty(tag))
+                if (!String.IsNullOrEmpty(tag))
                 {
                     recipe.AddTag(tag);
                 }
             }
-            
+
 
             return recipe;
         }
@@ -177,7 +180,7 @@ namespace CookBook.Recipes
             Step updatedStep = step;
             //Set up the ingredients
             var ingredients = SelecteIngredientIdsByStepId(step.Id);
-            foreach(var ingredient in ingredients)
+            foreach (var ingredient in ingredients)
             {
                 //Get the name for the ingredients
                 ingredient.Name = SelectIngredientNameById(ingredient.Id);
@@ -394,7 +397,7 @@ namespace CookBook.Recipes
                     // Create and prepare an SQL statement.
                     command.CommandText = SqlResources.RECIPETAG_INSERT;
                     var recipeIdParam = new MySqlParameter("@recipeId", MySqlDbType.Int32);
-                    var tagIdParam = new MySqlParameter("@tagId", MySqlDbType.Int32);            
+                    var tagIdParam = new MySqlParameter("@tagId", MySqlDbType.Int32);
                     command.Parameters.Add(recipeIdParam);
                     command.Parameters.Add(tagIdParam);
 
@@ -913,7 +916,7 @@ namespace CookBook.Recipes
                         }
                         iterator++;
                     }
-                    
+
                 }
                 catch (Exception ex)
                 {
@@ -1102,7 +1105,7 @@ namespace CookBook.Recipes
                         ingredient.UnitId = DBUtils.AsInteger(reader["fk_quantityunits"]);
                         ingredient.Quantity = DBUtils.AsInteger(reader["quantity"]);
                         ingredients.Add(ingredient);
-                        iterator++;            
+                        iterator++;
                     }
                 }
                 catch (Exception ex)
@@ -1186,10 +1189,10 @@ namespace CookBook.Recipes
                     // Change parameter values and call ExecuteReader.
                     command.Parameters[0].Value = unitName;
                     MySqlDataReader reader = command.ExecuteReader();
-                    if(reader.Read() && reader[0] != DBNull.Value)
+                    if (reader.Read() && reader[0] != DBNull.Value)
                     {
                         id = DBUtils.AsInteger(reader.GetString(0));
-                    } 
+                    }
                 }
                 catch (Exception ex)
                 {

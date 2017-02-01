@@ -13,6 +13,10 @@ using System.Net;
 
 namespace CookBook.WebResources
 {
+    /// <summary>
+    /// Uses webClient to upload images to the server.
+    /// NOTE: Not working because of incompatibility issues with the server.
+    /// </summary>
     public class ImageUploader : FileUploader
     {
         private WebClient webClient;
@@ -26,6 +30,7 @@ namespace CookBook.WebResources
         {
             webClient = new WebClient();
             webClient.UseDefaultCredentials = true;
+            // Credentials should normally be removed. The user is set up to have access only to this folder and can therefore be left in.
             webClient.Credentials = new NetworkCredential("cookbook@blancos.ch", "WokuDasEi");
             webClient.Headers.Add(HttpRequestHeader.ContentType, "image/png");
         }
