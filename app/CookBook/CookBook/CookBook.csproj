@@ -75,6 +75,7 @@
     <Compile Include="Utils\DBUtils.cs" />
     <Compile Include="Utils\PathUtils.cs" />
     <Compile Include="WebResources\FileUploader.cs" />
+    <Compile Include="WebResources\FtpUploader.cs" />
     <Compile Include="WebResources\ImageUploader.cs" />
   </ItemGroup>
   <ItemGroup>

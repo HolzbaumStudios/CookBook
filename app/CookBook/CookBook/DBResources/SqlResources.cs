@@ -61,7 +61,7 @@ namespace CookBook.resources
                                                      + "WHERE id_steps=@id";
         #endregion
         #region Steps_Ingredients
-        public static readonly String STEPINGREDIENT_INSERT = "INSERT INTO STEPS_INGREDIENTS (fk_steps, fk_ingredients, fk_quantityunits, quantity "
+        public static readonly String STEPINGREDIENT_INSERT = "INSERT INTO STEPS_INGREDIENTS (fk_steps, fk_ingredients, fk_quantityunits, quantity) "
                                                      + "VALUES (@stepId, @ingredientId, @unitId, @quantity)";
         public static readonly String STEPINGREDIENT_UPDATE = "UPDATE STEPS_INGREDIENTS "
                                                      + "SET fk_steps=@stepId, fk_ingredients=@ingredientId, fk_quantityunits=@unitId, quantity=@quantity "

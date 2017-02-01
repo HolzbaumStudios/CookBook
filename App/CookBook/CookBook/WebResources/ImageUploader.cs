@@ -13,7 +13,7 @@ using System.Net;
 
 namespace CookBook.WebResources
 {
-    class ImageUploader : FileUploader
+    public class ImageUploader : FileUploader
     {
         private WebClient webClient;
 
@@ -25,7 +25,9 @@ namespace CookBook.WebResources
         public void InitializeClient()
         {
             webClient = new WebClient();
-            webClient.Credentials = CredentialCache.DefaultCredentials; //TODO implement credentials
+            webClient.UseDefaultCredentials = true;
+            webClient.Credentials = new NetworkCredential("cookbook@blancos.ch", "WokuDasEi");
+            webClient.Headers.Add(HttpRequestHeader.ContentType, "image/png");
         }
 
         public void LogResult()
@@ -35,7 +37,7 @@ namespace CookBook.WebResources
 
         public void UploadFile(String file)
         {
-            webClient.UploadFile(@"http://www.blancos.ch/home/nicoleu1/cookbook/images", "PUT", file);
+            webClient.UploadFile(@"ftp://www.blancos.ch/cookbook", "STOR", file);
         }
     }
 }

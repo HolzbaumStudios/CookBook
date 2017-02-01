@@ -52,6 +52,7 @@ namespace AdminConsole
                     recipe.AddStep(newStep);
                 }
             }
+            recipe.ImagePath = Label_ImagePath.Text;
             var rm = new RecipeManagerAdmin();
             rm.StoreRecipe(recipe);
             MessageBox.Show("Recipe saved!");
@@ -93,6 +94,19 @@ namespace AdminConsole
         private String RemoveWhiteSpace(String text)
         {
             return Regex.Replace(text, @"\s+", "");
+        }
+
+        private void Button_Upload_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = "c:\\";
+            openFileDialog.Filter = "image files (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg|All files (*.*)|*.*";
+            openFileDialog.FilterIndex = 1;
+            openFileDialog.RestoreDirectory = true;
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                Label_ImagePath.Text = openFileDialog.FileName;
+            }
         }
     }
 }
