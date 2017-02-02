@@ -764,8 +764,7 @@ namespace CookBook.Recipes
                     // Change parameter values and call ExecuteReader.
                     command.Parameters[0].Value = name;
                     MySqlDataReader reader = command.ExecuteReader();
-                    int iterator = 0;
-                    while (reader.Read() && reader[iterator] != DBNull.Value)
+                    while (reader.Read() && reader[0] != DBNull.Value)
                     {
                         Recipe recipe = new Recipe();
                         recipe.Id = DBUtils.AsInteger(reader["id_recipes"]);
@@ -774,7 +773,6 @@ namespace CookBook.Recipes
                         recipe.Creator = DBUtils.AsString(reader["recipes_creator"]);
                         recipe.ImageId = DBUtils.AsInteger(reader["fk_image"]);
                         recipes.Add(recipe);
-                        iterator++;
                     }
                 }
                 catch (Exception ex)
@@ -806,8 +804,7 @@ namespace CookBook.Recipes
                     command.Prepare();
 
                     MySqlDataReader reader = command.ExecuteReader();
-                    int iterator = 0;
-                    while (reader.Read() && reader[iterator] != DBNull.Value)
+                    while (reader.Read() && reader[0] != DBNull.Value)
                     {
                         Recipe recipe = new Recipe();
                         recipe.Id = DBUtils.AsInteger(reader["id_recipes"]);
@@ -816,7 +813,6 @@ namespace CookBook.Recipes
                         recipe.Creator = DBUtils.AsString(reader["recipes_creator"]);
                         recipe.ImageId = DBUtils.AsInteger(reader["fk_image"]);
                         recipes.Add(recipe);
-                        iterator++;
                     }
                 }
                 catch (Exception ex)
@@ -906,15 +902,13 @@ namespace CookBook.Recipes
                     // Change parameter values and call ExecuteReader.
                     command.Parameters[0].Value = recipeId;
                     MySqlDataReader reader = command.ExecuteReader();
-                    int iterator = 0;
-                    while (reader.Read() && reader[iterator] != DBNull.Value)
+                    while (reader.Read() && reader[0] != DBNull.Value)
                     {
                         int stepId = DBUtils.AsInteger(reader["fk_steps"]);
                         if (stepId != 0)
                         {
                             ids.Add(stepId);
                         }
-                        iterator++;
                     }
 
                 }
@@ -1004,15 +998,13 @@ namespace CookBook.Recipes
                     // Change parameter values and call ExecuteReader.
                     command.Parameters[0].Value = recipeId;
                     MySqlDataReader reader = command.ExecuteReader();
-                    int iterator = 0;
-                    while (reader.Read() && reader[iterator] != DBNull.Value)
+                    while (reader.Read() && reader[0] != DBNull.Value)
                     {
                         int tagId = DBUtils.AsInteger(reader["fk_tags"]);
                         if (tagId != 0)
                         {
                             ids.Add(tagId);
                         }
-                        iterator++;
                     }
 
                 }
@@ -1097,15 +1089,13 @@ namespace CookBook.Recipes
                     // Change parameter values and call ExecuteReader.
                     command.Parameters[0].Value = stepId;
                     MySqlDataReader reader = command.ExecuteReader();
-                    int iterator = 0;
-                    while (reader.Read() && reader[iterator] != DBNull.Value)
+                    while (reader.Read() && reader[0] != DBNull.Value)
                     {
                         var ingredient = new Ingredient();
                         ingredient.Id = DBUtils.AsInteger(reader["fk_ingredients"]);
                         ingredient.UnitId = DBUtils.AsInteger(reader["fk_quantityunits"]);
                         ingredient.Quantity = DBUtils.AsInteger(reader["quantity"]);
                         ingredients.Add(ingredient);
-                        iterator++;
                     }
                 }
                 catch (Exception ex)
