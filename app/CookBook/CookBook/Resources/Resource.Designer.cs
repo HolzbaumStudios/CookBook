@@ -81,20 +81,11 @@ namespace CookBook
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f05001c
-			public const int CallButton = 2131034140;
-			
-			// aapt resource value: 0x7f050018
-			public const int btnPedro = 2131034136;
-			
 			// aapt resource value: 0x7f05000b
 			public const int buttonRecipeDetailsPrepare = 2131034123;
 			
 			// aapt resource value: 0x7f050013
 			public const int buttonStepsTimer = 2131034131;
-			
-			// aapt resource value: 0x7f05001b
-			public const int clickEvent = 2131034139;
 			
 			// aapt resource value: 0x7f050006
 			public const int imageButtonCredits = 2131034118;
@@ -144,9 +135,6 @@ namespace CookBook
 			// aapt resource value: 0x7f050016
 			public const int tableRowSteps3 = 2131034134;
 			
-			// aapt resource value: 0x7f050019
-			public const int textView1 = 2131034137;
-			
 			// aapt resource value: 0x7f050015
 			public const int textViewIngredients = 2131034133;
 			
@@ -164,9 +152,6 @@ namespace CookBook
 			
 			// aapt resource value: 0x7f050017
 			public const int textViewStepsSteps = 2131034135;
-			
-			// aapt resource value: 0x7f05001a
-			public const int txtPedro = 2131034138;
 			
 			static Id()
 			{
@@ -198,9 +183,6 @@ namespace CookBook
 			
 			// aapt resource value: 0x7f030005
 			public const int StepsListItems = 2130903045;
-			
-			// aapt resource value: 0x7f030006
-			public const int Testscreen = 2130903046;
 			
 			static Layout()
 			{

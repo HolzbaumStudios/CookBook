@@ -19,7 +19,7 @@ namespace CookBook
         private Context recipeContext;
 
         /// <summary>
-        /// 
+        /// Method that gets an Activity in this case and a List-item and implements them
         /// </summary>
         /// <param name="context"></param>
         /// <param name="recipe"></param>
@@ -29,7 +29,6 @@ namespace CookBook
             recipeContext = context;
         }
 
-        // Gibt dem Listview zurück, wieviele Items in der Liste sind und dargestellt werden sollen.
         public override int Count
         {
             get
@@ -38,13 +37,11 @@ namespace CookBook
             }
         }
 
-        //
         public override long GetItemId(int position)
         {
             return position;
         }
 
-        //
         public override Step this[int position]
         {
             get
@@ -62,16 +59,10 @@ namespace CookBook
                 row = LayoutInflater.From(recipeContext).Inflate(Resource.Layout.StepsListItems, null, false);
             }
 
-            // Refferenz zum Textelement im View
-
-
-            //TextView recipeName = row.FindViewById<TextView>(Resource.Id.recipeName);
-            //recipeName.Text = myRecipes[position].Name;
-
             TextView textViewStepsDescription = row.FindViewById<TextView>(Resource.Id.textViewStepsDescription);
             textViewStepsDescription.Text = myRecipe.Steps[position].Description;
-
             TextView textViewStepsSteps = row.FindViewById<TextView>(Resource.Id.textViewStepsSteps);
+            // Set what has to be shown in the row
             foreach (Ingredient ingredient in myRecipe.Steps[position].Ingredients)
             {
                 textViewStepsSteps.Text = ingredient.Name + " " + ingredient.Quantity + " " + ingredient.Unit;

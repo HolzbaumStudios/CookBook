@@ -16,31 +16,36 @@ namespace CookBook
     [Activity(Label = "Recipes", MainLauncher = false)]
     public class RecipesActivity : Activity
     {
-        // Variablen deklarieren
         private ListView myListView;
         private List<Recipe> myRecipeList;
 
+        /// <summary>
+        /// Auto-generated OnCreate method for an activity
+        /// </summary>
+        /// <param name="savedInstanceState"></param>
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
-            // Instanzieren
             SetContentView(Resource.Layout.Recipes);
+            // Find a Listview GUI element over it's ID
             myListView = FindViewById<ListView>(Resource.Id.listViewRecipes);
 
             RecipeManager recipeManager = new RecipeManager();
             myRecipeList = recipeManager.GetListOfAllRecipes();
 
-            // ArrayAdapter (Context context,int txtviewresource ID) Klasse um die Liste im gewünschten Format darzustellen
-            // this steht hier für die Activity welche eine Subklasse von Context darstellt, daher ist das kein Problem)
+            // ArrayAdapter(Context context,int txtviewresource ID). Class to show my list in the format I define
+            // "this" stands for this Activity (since it's a subclass from context there is no problem using "this")
             RecipesAdapter adapter = new RecipesAdapter(this, myRecipeList);
 
+            // Attach my adapter to the view it has to show
             myListView.Adapter = adapter;
 
+            // Start clickevent handler when a listitem has been clicked
             myListView.ItemClick += MyListView_ItemClick;
 
         }
-        // Clickevent handler
+        // Clickevent handler (also attaches the ID of the clicked object to the new Intent)
         private void MyListView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
             Intent myIntent = new Intent(this, typeof(RecipeDetailsActivity));
